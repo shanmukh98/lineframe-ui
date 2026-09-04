@@ -12,8 +12,12 @@ as visible grids, generous spacing, quiet metadata, and strong type hierarchy.
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.1.0/lineframe.css"
+  href="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.2.0/lineframe.css"
 >
+<script
+  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.2.0/lineframe-toc.js"
+  defer
+></script>
 <body class="lf-site" data-theme="light" style="--lf-accent: #526f7d">
 ```
 
@@ -58,7 +62,33 @@ accent: "#6c728f"
 - `lf-section`: label/content split section
 - `lf-post-list`: writing or project index
 - `lf-article`: readable long-form layout
+- `lf-toc`: generated sticky article navigation
 - `lf-prose`: Markdown typography
 - `lf-button`, `lf-tag`, `lf-meta`: small interface elements
 
 Open `demo/index.html` to preview both themes and several accent colors.
+
+## Article table of contents
+
+Add an initially hidden TOC before the prose. The script fills it from `h2`
+and `h3` elements, makes links clickable, and updates the active section while
+the reader scrolls.
+
+```html
+<div class="lf-article__content lf-article__content--single" data-lineframe-article>
+  <nav class="lf-toc" data-lineframe-toc aria-label="On this page" hidden>
+    <p class="lf-toc__title">On this page</p>
+    <button class="lf-toc__toggle" type="button" aria-expanded="false">
+      <span>On this page</span>
+      <span class="lf-toc__toggle-mark" aria-hidden="true">+</span>
+    </button>
+    <ol class="lf-toc__list" data-lineframe-toc-list></ol>
+  </nav>
+  <div class="lf-prose" data-lineframe-prose>
+    <!-- Article headings and content -->
+  </div>
+</div>
+```
+
+On wide screens the TOC stays on the left as the page scrolls. At narrower
+widths it becomes a collapsible block above the article.
