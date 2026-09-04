@@ -56,7 +56,6 @@
       return link;
     });
 
-    article.classList.remove("lf-article__content--single");
     toc.hidden = false;
 
     const mobileQuery = window.matchMedia("(max-width: 52rem)");

@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lineframe UI</title>
     <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <script src="../lineframe-theme.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -36,11 +37,17 @@
           <span class="lf-brand__mark" aria-hidden="true"></span>
           lineframe
         </a>
-        <nav class="lf-nav" aria-label="Primary">
-          <a aria-current="page" href="#writing">Writing</a>
-          <a href="#about">About</a>
-          <a class="lf-nav__optional" href="https://github.com/">GitHub</a>
-        </nav>
+        <div class="lf-header__actions">
+          <nav class="lf-nav" aria-label="Primary">
+            <a aria-current="page" href="#writing">Writing</a>
+            <a href="#about">About</a>
+            <a class="lf-nav__optional" href="https://github.com/">GitHub</a>
+          </nav>
+          <button class="lf-theme-toggle" data-lineframe-theme-toggle type="button">
+            <span class="lf-theme-toggle__mark" aria-hidden="true"></span>
+            <span class="lf-theme-toggle__label" data-lineframe-theme-label>Dark</span>
+          </button>
+        </div>
       </div>
     </header>
 
@@ -58,7 +65,6 @@
             </p>
             <div class="lf-actions">
               <a class="lf-button lf-button--solid" href="#writing">Read notes</a>
-              <button class="lf-button" id="theme-toggle" type="button">Dark theme</button>
             </div>
           </div>
         </section>
@@ -133,15 +139,6 @@
     </footer>
 
     <script>
-      const root = document.documentElement;
-      const themeButton = document.querySelector("#theme-toggle");
-
-      themeButton.addEventListener("click", () => {
-        const dark = root.dataset.theme === "dark";
-        root.dataset.theme = dark ? "light" : "dark";
-        themeButton.textContent = dark ? "Dark theme" : "Light theme";
-      });
-
       document.querySelectorAll("[data-accent]").forEach((button) => {
         button.addEventListener("click", () => {
           document.body.style.setProperty("--lf-accent", button.dataset.accent);

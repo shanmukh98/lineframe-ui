@@ -115,6 +115,12 @@ body.lf-site {
   padding-inline: clamp(1rem, 3vw, 2.5rem);
 }
 
+.lf-header__actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.8rem, 2vw, 1.5rem);
+}
+
 .lf-brand {
   display: inline-flex;
   align-items: center;
@@ -179,6 +185,47 @@ body.lf-site {
 .lf-nav a[aria-current="page"]::after {
   opacity: 1;
   transform: scaleX(1);
+}
+
+.lf-theme-toggle {
+  display: inline-flex;
+  min-height: 2.15rem;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--lf-border);
+  border-radius: 999px;
+  background: var(--lf-panel);
+  color: var(--lf-muted);
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.lf-theme-toggle:hover {
+  border-color: var(--lf-accent);
+  color: var(--lf-text);
+}
+
+.lf-theme-toggle__mark {
+  position: relative;
+  width: 0.78rem;
+  height: 0.78rem;
+  overflow: hidden;
+  border: 1px solid var(--lf-border-strong);
+  border-radius: 50%;
+  background: var(--lf-panel-raised);
+}
+
+.lf-theme-toggle__mark::after {
+  position: absolute;
+  inset: -1px 50% -1px -1px;
+  content: "";
+  background: var(--lf-accent);
+}
+
+[data-theme="dark"] .lf-theme-toggle__mark::after {
+  inset: -1px -1px -1px 50%;
 }
 
 .lf-hero {
@@ -412,12 +459,29 @@ body.lf-site {
   border-inline: 1px solid var(--lf-border);
 }
 
-.lf-article__header {
+.lf-article__layout {
   display: grid;
-  grid-template-columns: minmax(8rem, 0.26fr) minmax(0, 1fr);
-  gap: clamp(2rem, 6vw, 5rem);
+  grid-template-columns: minmax(11rem, 14rem) minmax(0, 1fr);
+}
+
+.lf-article__header {
+  grid-column: 2;
+  grid-row: 1;
   padding: clamp(3rem, 7vw, 6rem) clamp(1.5rem, 4vw, 3.5rem);
+  border-left: 1px solid var(--lf-border);
   border-bottom: 1px solid var(--lf-border);
+}
+
+.lf-article__header > .lf-section__label {
+  display: inline-block;
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+.lf-article__rail {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  min-width: 0;
+  padding: clamp(3rem, 7vw, 6rem) 1rem 3rem clamp(1.5rem, 4vw, 3.5rem);
 }
 
 .lf-kicker {
@@ -429,12 +493,13 @@ body.lf-site {
 }
 
 .lf-article__title {
-  max-width: 20ch;
+  max-width: 22ch;
   margin: 0;
-  font-size: clamp(2.25rem, 5vw, 4.55rem);
+  font-size: clamp(2.25rem, 5vw, 4.1rem);
   font-weight: 520;
   letter-spacing: -0.055em;
   line-height: 1.02;
+  text-wrap: balance;
 }
 
 .lf-article__description {
@@ -467,24 +532,10 @@ body.lf-site {
 }
 
 .lf-article__body {
+  grid-column: 2;
+  grid-row: 2;
   padding: clamp(2.6rem, 6vw, 5.5rem) clamp(1.5rem, 4vw, 3.5rem);
-}
-
-.lf-article__content {
-  display: grid;
-  grid-template-columns: minmax(11rem, 14rem) minmax(0, var(--lf-reading-width));
-  gap: clamp(2rem, 5vw, 4.5rem);
-  align-items: start;
-  justify-content: center;
-}
-
-.lf-article__content--single {
-  grid-template-columns: minmax(0, var(--lf-reading-width));
-}
-
-.lf-article__content > .lf-prose {
-  width: 100%;
-  margin-inline: 0;
+  border-left: 1px solid var(--lf-border);
 }
 
 .lf-toc {
@@ -765,8 +816,7 @@ body.lf-site {
 }
 
 @media (max-width: 52rem) {
-  .lf-hero,
-  .lf-article__header {
+  .lf-hero {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
@@ -785,10 +835,26 @@ body.lf-site {
     padding-top: 1rem;
   }
 
-  .lf-article__content,
-  .lf-article__content--single {
-    grid-template-columns: minmax(0, var(--lf-reading-width));
-    gap: 2rem;
+  .lf-article__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .lf-article__header {
+    grid-column: 1;
+    grid-row: 1;
+    border-left: 0;
+  }
+
+  .lf-article__rail {
+    grid-column: 1;
+    grid-row: 2;
+    padding: 2rem clamp(1.5rem, 4vw, 3.5rem) 0;
+  }
+
+  .lf-article__body {
+    grid-column: 1;
+    grid-row: 3;
+    border-left: 0;
   }
 
   .lf-toc {
@@ -838,6 +904,10 @@ body.lf-site {
     gap: 1rem;
   }
 
+  .lf-header__actions {
+    gap: 0.65rem;
+  }
+
   .lf-nav {
     gap: 0.9rem;
   }
@@ -848,6 +918,22 @@ body.lf-site {
 
   .lf-nav .lf-nav__optional {
     display: none;
+  }
+
+  .lf-theme-toggle {
+    width: 2.15rem;
+    padding-inline: 0;
+    justify-content: center;
+  }
+
+  .lf-theme-toggle__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .lf-frame,
@@ -885,6 +971,7 @@ body.lf-site {
   }
 
   .lf-article__header,
+  .lf-article__rail,
   .lf-article__body,
   .lf-page__header {
     padding-inline: 1.25rem;

@@ -10,22 +10,32 @@ as visible grids, generous spacing, quiet metadata, and strong type hierarchy.
 ## Use
 
 ```html
+<script
+  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.3.0/lineframe-theme.js"
+></script>
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.2.0/lineframe.css"
+  href="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.3.0/lineframe.css"
 >
 <script
-  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.2.0/lineframe-toc.js"
+  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.3.0/lineframe-toc.js"
   defer
 ></script>
-<body class="lf-site" data-theme="light" style="--lf-accent: #526f7d">
+<body class="lf-site" style="--lf-accent: #526f7d">
 ```
 
-The default theme is light. Dark mode is available with:
+The theme script uses the browser's `prefers-color-scheme` value by default.
+Add a manual toggle anywhere in the page:
 
 ```html
-<body class="lf-site" data-theme="dark">
+<button class="lf-theme-toggle" data-lineframe-theme-toggle type="button">
+  <span class="lf-theme-toggle__mark" aria-hidden="true"></span>
+  <span class="lf-theme-toggle__label" data-lineframe-theme-label>Dark</span>
+</button>
 ```
+
+Manual choices are stored under `lineframe-theme`. Call
+`window.LineframeTheme.reset()` to return to the browser preference.
 
 ## Per-page accents
 
@@ -58,6 +68,7 @@ accent: "#6c728f"
 
 - `lf-shell`, `lf-frame`: centered framed page structure
 - `lf-header`, `lf-nav`: responsive navigation
+- `lf-theme-toggle`: system-aware light/dark control
 - `lf-hero`: editorial introduction
 - `lf-section`: label/content split section
 - `lf-post-list`: writing or project index
@@ -75,17 +86,22 @@ and `h3` elements, makes links clickable, and updates the active section while
 the reader scrolls.
 
 ```html
-<div class="lf-article__content lf-article__content--single" data-lineframe-article>
-  <nav class="lf-toc" data-lineframe-toc aria-label="On this page" hidden>
-    <p class="lf-toc__title">On this page</p>
-    <button class="lf-toc__toggle" type="button" aria-expanded="false">
-      <span>On this page</span>
-      <span class="lf-toc__toggle-mark" aria-hidden="true">+</span>
-    </button>
-    <ol class="lf-toc__list" data-lineframe-toc-list></ol>
-  </nav>
-  <div class="lf-prose" data-lineframe-prose>
-    <!-- Article headings and content -->
+<div class="lf-article__layout" data-lineframe-article>
+  <header class="lf-article__header"><!-- Title and metadata --></header>
+  <aside class="lf-article__rail">
+    <nav class="lf-toc" data-lineframe-toc aria-label="On this page" hidden>
+      <p class="lf-toc__title">On this page</p>
+      <button class="lf-toc__toggle" type="button" aria-expanded="false">
+        <span>On this page</span>
+        <span class="lf-toc__toggle-mark" aria-hidden="true">+</span>
+      </button>
+      <ol class="lf-toc__list" data-lineframe-toc-list></ol>
+    </nav>
+  </aside>
+  <div class="lf-article__body">
+    <div class="lf-prose" data-lineframe-prose>
+      <!-- Article headings and content -->
+    </div>
   </div>
 </div>
 ```
