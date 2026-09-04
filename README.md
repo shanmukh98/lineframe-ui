@@ -11,14 +11,14 @@ as visible grids, generous spacing, quiet metadata, and strong type hierarchy.
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.4.0/lineframe-theme.js"
+  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.5.0/lineframe-theme.js"
 ></script>
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.4.0/lineframe.css"
+  href="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.5.0/lineframe.css"
 >
 <script
-  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.4.0/lineframe-toc.js"
+  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.5.0/lineframe-toc.js"
   defer
 ></script>
 <body class="lf-site" style="--lf-accent: #526f7d">

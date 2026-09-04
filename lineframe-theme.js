@@ -45,7 +45,7 @@
 
   const updateThemeColor = (theme) => {
     const meta = document.querySelector("[data-lineframe-theme-color]");
-    if (meta) meta.setAttribute("content", theme === "dark" ? "#10110f" : "#f4f3ee");
+    if (meta) meta.setAttribute("content", theme === "dark" ? "#000000" : "#f4f3ee");
   };
 
   const applyTheme = (theme, persist = false) => {
