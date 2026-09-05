@@ -1,0 +1,52 @@
+@layer lineframe.layout {
+  .lf-container {
+    inline-size: min(calc(100% - 2rem), var(--lf-frame-width));
+    margin-inline: auto;
+  }
+
+  .lf-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lf-gap, var(--lf-space-4));
+  }
+
+  .lf-stack > * {
+    margin-block: 0;
+  }
+
+  .lf-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--lf-gap, var(--lf-space-3));
+  }
+
+  .lf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--lf-grid-min, 16rem)), 1fr));
+    gap: var(--lf-gap, var(--lf-space-4));
+  }
+
+  .lf-shell {
+    padding-inline: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .lf-frame {
+    width: min(100%, var(--lf-frame-width));
+    margin-inline: auto;
+    border-inline: 1px solid var(--lf-border);
+  }
+
+  .lf-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 40rem) {
+    .lf-frame {
+      border-inline: 0;
+    }
+  }
+}

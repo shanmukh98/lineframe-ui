@@ -1,0 +1,127 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import Demo from "../../../components/Demo.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import { backLink, pagination, header, toc, articleLayout } from "../../../examples/navigation";
+import { url } from "../../../lib/urls";
+---
+
+<DocsLayout
+  title="Navigation"
+  description="Make the current location and the next step clear. Use real destinations, native links, and one understandable navigation structure."
+  section="Components"
+  source="website/src/pages/docs/components/navigation.astro"
+>
+  <div class="lf-prose docs-prose">
+    <h2 id="back-links">A predictable way back</h2>
+    <p>
+      <code>lf-back-link</code> is a small navigational link, not a browser-history command. Point it
+      to a meaningful parent page so it works even when someone arrives directly from an external link.
+    </p>
+  </div>
+  <Demo id="navigation-back" title="A real parent destination" code={backLink} />
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="pagination">Pagination is still navigation</h2>
+      <p>
+        Use <code>lf-pagination</code> on a named <code>nav</code>. Mark the active link with <code
+          >aria-current="page"</code
+        >. Render an unavailable next or previous direction as noninteractive text rather than a
+        dead link.
+      </p>
+      <p>
+        These demo links navigate between component guides. The current page is the final item in
+        this small example; no pretend dataset is loaded.
+      </p>
+    </div>
+    <Demo
+      id="navigation-pagination"
+      title="Native links and a current-page state"
+      code={pagination}
+    />
+    <div class="lf-prose docs-prose">
+      <p>
+        If your application loads results dynamically, update the URL, page state, focus, and result
+        announcements appropriately. The CSS component does not implement a router or pagination
+        controller.
+      </p>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="headers">A shared site header</h2>
+      <p>
+        <code>lf-header</code>, <code>lf-header__inner</code>,
+        <code>lf-brand</code>, and <code>lf-nav</code> form the existing header vocabulary. Use a short
+        primary navigation with meaningful link names. The header on this documentation is a working example
+        with website-specific spacing and responsive choices.
+      </p>
+    </div>
+    <CodeBlock id="navigation-header" code={header} label="Site header" />
+    <div class="lf-prose docs-prose">
+      <p>
+        The header classes do not implement a mobile menu. A short link list may wrap; a longer one
+        needs a considered disclosure pattern. This site uses native <code>details</code> for its mobile
+        documentation menu, so it also works without JavaScript.
+      </p>
+      <p>
+        <code>lf-footer</code>, <code>lf-footer__inner</code>, and
+        <code>lf-footer__links</code> provide the matching footer structure. Name navigation landmarks
+        distinctly when a page has more than one.
+      </p>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="article-toc">Optional article navigation</h2>
+      <p>
+        The TOC controller finds <code>h2</code> and <code>h3</code> headings inside
+        <code>data-lineframe-prose</code>, creates links, and tracks the current section. At least
+        two headings are required. Supply stable IDs when you want durable, shareable links; missing
+        IDs are generated.
+      </p>
+      <p>
+        This compact preview keeps the TOC above the example text. It does not introduce another
+        documentation rail. On narrow screens, use the toggle to open the section links.
+      </p>
+    </div>
+    <Demo
+      id="navigation-toc"
+      class="docs-toc-demo"
+      title="A live, generated table of contents"
+      code={toc}
+    />
+    <noscript>
+      <p class="docs-inline-note">
+        JavaScript is off. The example article remains readable without a TOC.
+      </p>
+    </noscript>
+    <div class="lf-prose docs-prose">
+      <h3 id="article-layout">A standalone article layout</h3>
+      <p>
+        For a full article page, use the existing article layout below. It puts navigation on the
+        left on wide screens and above the prose on smaller ones. The initially hidden TOC stays out
+        of the way without JavaScript.
+      </p>
+    </div>
+    <CodeBlock id="navigation-article" code={articleLayout} label="Standalone article" />
+    <div class="lf-prose docs-prose">
+      <p>
+        Keep <code>data-lineframe-article</code>,
+        <code>data-lineframe-prose</code>, <code>data-lineframe-toc</code>, and
+        <code>data-lineframe-toc-list</code> in the same article structure. The generated links use <code
+          >aria-current="location"</code
+        >, which is different from a site link’s current-page state.
+      </p>
+      <p>
+        The CDN script initializes the TOC automatically. Module consumers call
+        <code>initToc()</code> after rendering the article and clean it up on teardown. See <a
+          href={url("docs/javascript/#toc-api")}>the lifecycle API</a
+        >.
+      </p>
+    </div>
+  </section>
+</DocsLayout>

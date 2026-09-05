@@ -1,0 +1,52 @@
+name: Feature request
+description: Propose a generic, composable improvement to Lineframe.
+title: "[Feature]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the need before the implementation. Lineframe favors native HTML,
+        small composable components, and no runtime dependencies.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the user task and what is difficult with the current library.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Show minimal markup or an API sketch if useful. Explain how it stays native-first.
+    validations:
+      required: true
+  - type: textarea
+    id: reuse
+    attributes:
+      label: Generic use cases
+      description: How would this help different sites, beyond a single application or theme?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Can existing classes, tokens, native HTML, or a documentation example meet the need?
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Interaction, accessibility, and compatibility
+      description: |
+        Note keyboard behavior, accessible names, responsive states, light/dark contrast,
+        reduced motion, no-JavaScript behavior, and any public hooks this might affect.
+        If you do not know yet, say which questions need investigation.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and the documentation for this proposal.
+          required: true

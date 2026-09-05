@@ -1,0 +1,14 @@
+---
+import { asset } from "../lib/urls";
+
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className = "" } = Astro.props;
+---
+
+<svg class:list={["lf-icon", className]} aria-hidden="true" focusable="false">
+  <use href={`${asset("lineframe-icons.svg")}#${name}`}></use>
+</svg>

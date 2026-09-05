@@ -1,0 +1,95 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import Demo from "../../../components/Demo.astro";
+import { buttonLinks, buttonActions, buttonSizes } from "../../../examples/buttons";
+import { url } from "../../../lib/urls";
+---
+
+<DocsLayout
+  title="Buttons"
+  description="Compact controls, clear hierarchy, and native semantics. The element does the work; the class supplies the presentation."
+  section="Components"
+  source="website/src/pages/docs/components/buttons.astro"
+>
+  <div class="lf-prose docs-prose">
+    <h2 id="links-and-actions">Navigation is a link. An action is a button.</h2>
+    <p>
+      Use <code>&lt;a href&gt;</code> to navigate and
+      <code>&lt;button&gt;</code> to perform an action. Both can use
+      <code>lf-button</code>. A styled anchor still behaves like a link: readers can open it in a
+      new tab, copy its address, and follow it without JavaScript.
+    </p>
+  </div>
+  <Demo id="button-links" title="Navigation with a visual hierarchy" code={buttonLinks} />
+  <div class="lf-prose docs-prose">
+    <p>
+      Use <code>--solid</code> for a primary action, the unmodified button for a secondary action, and
+      <code>--quiet</code> for a lower-emphasis option. Avoid making every action look primary.
+    </p>
+  </div>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="native-actions">Native actions</h2>
+      <p>
+        Change the sample name, check its native validation, or reset it.
+        <code>--danger</code> communicates a destructive action, but does not add a confirmation dialog
+        or implement deletion. The discard action here only resets this local example.
+      </p>
+    </div>
+    <Demo id="button-actions" title="Submit and reset behavior" code={buttonActions} />
+    <div class="lf-prose docs-prose">
+      <p>
+        The documentation’s <code>data-demo-form</code> handler prevents submission and reports a local
+        result. It is not part of Lineframe. Without JavaScript, submitting reloads this example with
+        sample values in the URL. Your application should supply its own form action and result handling.
+      </p>
+      <p>
+        Always specify <code>type</code>. A button inside a form defaults to
+        <code>submit</code>; use <code>type="button"</code> for unrelated actions and <code
+          >type="reset"</code
+        > only when reverting fields is intentional.
+      </p>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="sizes-and-disabled">Sizes and the disabled state</h2>
+      <p>
+        <code>--small</code>, the default size, and <code>--large</code> provide three degrees of density.
+        These size examples all lead to the icon guide. The unavailable action is a genuinely disabled
+        native button.
+      </p>
+    </div>
+    <Demo id="button-sizes" title="Three sizes and a disabled button" code={buttonSizes} />
+    <div class="lf-prose docs-prose">
+      <p>
+        Prefer the native <code>disabled</code> attribute on a button. It blocks activation and removes
+        the button from the tab order. Explain elsewhere why an important action is unavailable.
+      </p>
+      <p>
+        <strong>Neither CSS nor <code>aria-disabled="true"</code> disables an anchor.</strong>
+        If navigation is unavailable, render explanatory noninteractive text or implement the complete
+        disabled behavior yourself. Do not leave a link that appears disabled but still navigates.
+      </p>
+    </div>
+  </section>
+
+  <div class="lf-prose docs-prose">
+    <h2 id="button-checklist">Before shipping</h2>
+    <ul>
+      <li>Use an action-specific name: “Download report,” not “Click here.”</li>
+      <li>Give icon-only controls an accessible name; hide decorative SVGs.</li>
+      <li>Check focus visibility, wrapping, and all states in both themes.</li>
+      <li>
+        Prefer a 44px comfortable target. WCAG 2.2 AA’s target-size criterion uses 24px with
+        exceptions; “small” does not remove that responsibility.
+      </li>
+    </ul>
+    <p>
+      Continue with <a href={url("docs/icons/")}>icons</a> or
+      <a href={url("docs/components/forms/")}>complete form patterns</a>.
+    </p>
+  </div>
+</DocsLayout>

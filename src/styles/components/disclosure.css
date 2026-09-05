@@ -1,0 +1,26 @@
+@layer lineframe.components {
+  .lf-disclosure {
+    padding: var(--lf-space-4);
+    border: 1px solid var(--lf-border);
+    border-radius: var(--lf-radius-md);
+    background: var(--lf-panel);
+  }
+
+  .lf-disclosure > summary {
+    padding-block: 0.3rem;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .lf-disclosure > summary::marker {
+    color: var(--lf-accent);
+  }
+
+  .lf-disclosure[open] > summary {
+    margin-block-end: var(--lf-space-3);
+  }
+
+  .lf-disclosure > :last-child {
+    margin-block-end: 0;
+  }
+}

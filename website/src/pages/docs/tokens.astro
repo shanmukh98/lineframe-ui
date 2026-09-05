@@ -1,0 +1,210 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+import Demo from "../../components/Demo.astro";
+import { palettes } from "../../lib/palettes";
+import { sourceUrl, url } from "../../lib/urls";
+
+const themeControl = `<div class="lf-cluster">
+  <button class="lf-theme-toggle" data-lineframe-theme-toggle type="button">
+    <span class="lf-theme-toggle__mark" aria-hidden="true"></span>
+    <span class="lf-theme-toggle__label" data-lineframe-theme-label>Change theme</span>
+  </button>
+  <button class="lf-button lf-button--quiet" data-lineframe-theme-reset type="button">
+    Use system theme
+  </button>
+</div>`;
+const scopedPalette = `<section class="lf-alert" data-lineframe-accent="moss">
+  <p class="lf-alert__title">A locally scoped accent</p>
+  <p>This component uses moss without changing the rest of the page.</p>
+</section>`;
+const slate = palettes.find((palette) => palette.name === "slate")!;
+const customPalette = `[data-lineframe-accent="brand"] {
+  --lf-accent-light: ${slate.light};
+  --lf-accent-dark: ${slate.dark};
+}`;
+const tokens = [
+  ["--lf-bg", "Page canvas: warm paper in light, true black in dark."],
+  ["--lf-panel, --lf-panel-raised", "Quiet surfaces above the canvas."],
+  ["--lf-text, --lf-muted, --lf-faint", "Primary and secondary text hierarchy."],
+  [
+    "--lf-border, --lf-border-strong",
+    "Structural dividers; not a substitute for essential control boundaries.",
+  ],
+  ["--lf-control-border", "A stronger boundary for native fields."],
+  ["--lf-accent, --lf-accent-soft, --lf-accent-medium", "Mode-aware accent and derived fills."],
+  ["--lf-info, --lf-success, --lf-warning, --lf-danger", "Semantic feedback colors."],
+  [
+    "--lf-space-1, --lf-space-2, --lf-space-3, --lf-space-4, --lf-space-6, --lf-space-8, --lf-space-12, --lf-space-16",
+    "Eight spacing steps: ¼, ½, ¾, 1, 1½, 2, 3, and 4rem.",
+  ],
+  ["--lf-radius-sm, --lf-radius-md, --lf-radius-lg", "A small set of modest corner radii."],
+  ["--lf-frame-width, --lf-reading-width", "Outer frame and prose measure."],
+  ["--lf-font-sans, --lf-font-mono", "Font stacks; a particular font is never required."],
+];
+---
+
+<DocsLayout
+  title="Tokens & themes"
+  description="Warm paper, a true-black canvas, and accents that stay in their lane. Use shared tokens instead of repeating one-off values."
+  section="Start here"
+  accent="violet"
+  source="website/src/pages/docs/tokens.astro"
+>
+  <div class="lf-prose docs-prose">
+    <h2 id="theme-preference">System first. Your choice after.</h2>
+    <p>
+      With no saved preference, the theme follows <code>prefers-color-scheme</code>, including
+      changes while the page is open. The optional controller stores a manual light or dark choice
+      under <code>lineframe-theme</code>. Resetting removes that override and returns to the system.
+    </p>
+    <p>
+      Try the controls below. They use the same controller as the site header. The document root
+      owns theme state; do not put a page-specific
+      <code>data-theme</code> on the body.
+    </p>
+  </div>
+  <Demo id="theme-control" title="A shared theme preference" code={themeControl} />
+  <div class="docs-theme-demo">
+    <output data-theme-status>Following your system preference</output>
+  </div>
+  <noscript>
+    <p class="docs-inline-note">JavaScript is off. The theme follows your system through CSS.</p>
+  </noscript>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="palettes">Four paired palettes</h2>
+      <p>
+        Each preset defines <code>--lf-accent-light</code> and
+        <code>--lf-accent-dark</code> once. The current theme chooses the right value. These references
+        are read directly from the
+        <a href={sourceUrl("src/styles/tokens/accents.css")}>source palette module</a>.
+      </p>
+    </div>
+    <div class="docs-palette-grid">
+      {
+        palettes.map((palette) => (
+          <section class="docs-palette" data-lineframe-accent={palette.name}>
+            <div class="docs-palette-pair">
+              <span class="docs-palette-chip" style={`--swatch: ${palette.light}`}>
+                Light <code>{palette.light}</code>
+              </span>
+              <span class="docs-palette-chip" style={`--swatch: ${palette.dark}`}>
+                Dark <code>{palette.dark}</code>
+              </span>
+            </div>
+            <h3>{palette.name}</h3>
+            <p>{palette.description}</p>
+          </section>
+        ))
+      }
+    </div>
+    <CodeBlock
+      id="page-palette"
+      code={'<body class="lf-site" data-lineframe-accent="violet">'}
+      label="Choose a page accent"
+    />
+    <div class="lf-prose docs-prose">
+      <p>
+        You can select a palette on a component instead. Accent-derived tokens are recalculated at
+        that scope, so a nested component does not inherit its parent’s tint by accident.
+      </p>
+    </div>
+    <Demo id="scoped-palette" title="A component-level palette" code={scopedPalette} />
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="custom-palette">Define a custom palette</h2>
+      <p>
+        In your application stylesheet, create a selector with both mode values. This example starts
+        with the slate pair. Replace both values, then verify normal text, focus, and control
+        contrast on every surface you use.
+      </p>
+    </div>
+    <CodeBlock
+      id="custom-palette-source"
+      code={customPalette}
+      language="css"
+      label="Your stylesheet"
+    />
+    <CodeBlock
+      id="use-custom-palette"
+      code={'<body class="lf-site" data-lineframe-accent="brand">'}
+      label="Select your palette"
+    />
+    <div class="lf-prose docs-prose">
+      <p>
+        If you are contributing a built-in preset, edit
+        <code>src/styles/tokens/accents.css</code> at the repository root and rebuild. Do not hand-edit
+        the generated <code>lineframe-accents.css</code> bundle. Direct <code>--lf-accent</code> overrides
+        still work, but use one color in both themes unless you manage the mode yourself.
+      </p>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="token-reference">A practical token reference</h2>
+      <p>
+        Override public tokens in your own stylesheet after loading the library. Keep changes scoped
+        when they should not affect the entire page.
+      </p>
+    </div>
+    <div
+      class="lf-table-wrap docs-reference-table"
+      role="region"
+      aria-label="Design token reference"
+      tabindex="0"
+    >
+      <table class="lf-table">
+        <caption>Common tokens and their purpose</caption>
+        <thead><tr><th scope="col">Token</th><th scope="col">Purpose</th></tr></thead>
+        <tbody>
+          {
+            tokens.map(([token, purpose]) => (
+              <tr>
+                <>
+                  <th scope="row">
+                    <code>{token}</code>
+                  </th>
+                  <td>{purpose}</td>
+                </>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <CodeBlock
+      id="layout-token-override"
+      language="css"
+      label="A focused override"
+      code={`.project-guide {
+  --lf-reading-width: 68ch;
+  --lf-font-sans: system-ui, sans-serif;
+}
+
+.project-cards {
+  --lf-grid-min: 15rem;
+  --lf-gap: 1.5rem;
+}`}
+    />
+    <div class="lf-prose docs-prose">
+      <p>
+        The layout helpers consume <code>--lf-gap</code> and
+        <code>--lf-grid-min</code>. See
+        <a href={url("docs/components/layout/")}>layout & typography</a> for live examples.
+      </p>
+      <h3 id="contrast-is-contextual">Contrast is contextual</h3>
+      <p>
+        A palette is not a blanket accessibility guarantee. Normal text needs 4.5:1 contrast, large
+        text 3:1, and essential UI indicators 3:1 against adjacent colors. Recheck customized
+        themes, semantic states, and hover and focus states with the <a
+          href={url("docs/accessibility/")}>accessibility guide</a
+        >.
+      </p>
+    </div>
+  </section>
+</DocsLayout>

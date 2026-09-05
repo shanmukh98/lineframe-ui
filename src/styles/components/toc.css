@@ -1,0 +1,139 @@
+@layer lineframe.components {
+  .lf-toc {
+    position: sticky;
+    top: calc(var(--lf-nav-height) + 2rem);
+    max-height: calc(100vh - var(--lf-nav-height) - 4rem);
+    overflow-y: auto;
+    padding-right: 1rem;
+    scrollbar-width: thin;
+  }
+
+  .lf-toc[hidden] {
+    display: none;
+  }
+
+  .lf-toc__title {
+    margin: 0 0 0.8rem;
+    color: var(--lf-faint);
+    font-family: var(--lf-font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .lf-toc__toggle {
+    display: none;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--lf-text);
+    cursor: pointer;
+    font-family: var(--lf-font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .lf-toc__toggle-mark {
+    color: var(--lf-accent);
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .lf-toc__list {
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--lf-border);
+    list-style: none;
+  }
+
+  .lf-toc__item {
+    margin: 0;
+    padding: 0;
+  }
+
+  .lf-toc__item--nested .lf-toc__link {
+    padding-left: 1.55rem;
+    font-size: 0.73rem;
+  }
+
+  .lf-toc__link {
+    display: block;
+    margin-left: -1px;
+    padding: 0.38rem 0 0.38rem 0.8rem;
+    border-left: 1px solid transparent;
+    color: var(--lf-muted);
+    font-size: 0.78rem;
+    line-height: 1.4;
+    text-decoration: none;
+    transition:
+      border-color 140ms ease,
+      color 140ms ease;
+  }
+
+  .lf-toc__link:hover {
+    color: var(--lf-text);
+  }
+
+  .lf-toc__link[aria-current="location"] {
+    border-left-color: var(--lf-accent);
+    color: var(--lf-text);
+  }
+
+  @media (max-width: 52rem) {
+    .lf-toc {
+      position: static;
+      max-height: none;
+      overflow: visible;
+      padding: 1rem;
+      border: 1px solid var(--lf-border);
+      border-radius: var(--lf-radius);
+      background: var(--lf-panel);
+    }
+
+    .lf-toc__title {
+      display: none;
+    }
+
+    .lf-toc:not(:has(.lf-toc__toggle)) .lf-toc__title {
+      display: block;
+    }
+
+    .lf-toc__toggle {
+      display: flex;
+    }
+
+    .lf-toc__list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.1rem 1rem;
+      margin-top: 0.8rem;
+      border-left: 0;
+    }
+
+    .lf-toc[data-collapsed="true"] .lf-toc__list {
+      display: none;
+    }
+
+    .lf-toc__link,
+    .lf-toc__item--nested .lf-toc__link {
+      margin-left: 0;
+      padding: 0.32rem 0;
+      border-left: 0;
+    }
+
+    .lf-toc__link[aria-current="location"] {
+      color: var(--lf-accent);
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .lf-toc__list {
+      grid-template-columns: 1fr;
+    }
+  }
+}

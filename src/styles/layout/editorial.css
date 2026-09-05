@@ -1,0 +1,46 @@
+@layer lineframe.layout {
+  .lf-hero {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.28fr) minmax(0, 1fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3.5rem);
+  }
+
+  .lf-strip {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem clamp(1.5rem, 4vw, 3.5rem);
+    border-top: 1px solid var(--lf-border);
+    color: var(--lf-faint);
+    font-size: 0.73rem;
+    letter-spacing: 0.035em;
+    text-align: center;
+  }
+
+  .lf-strip::before,
+  .lf-strip::after {
+    height: 1px;
+    flex: 1;
+    content: "";
+    background: var(--lf-border);
+  }
+
+  @media (max-width: 52rem) {
+    .lf-hero {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .lf-hero {
+      gap: 1rem;
+      padding-block: 2.5rem;
+    }
+
+    .lf-strip {
+      padding-inline: 1rem;
+    }
+  }
+}

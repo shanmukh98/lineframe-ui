@@ -1,0 +1,216 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+import { sourceUrl, url } from "../../lib/urls";
+
+const lifecycle = `import '@shanmukh98/lineframe-ui/styles.css';
+import { initTheme, initToc } from '@shanmukh98/lineframe-ui';
+
+// Call this in the browser, after the page markup exists.
+export function mountLineframe() {
+  const theme = initTheme();
+  const destroyToc = initToc();
+
+  return () => {
+    destroyToc();
+    theme.destroy();
+  };
+}`;
+const themeMethods = [
+  ["current()", "'light' | 'dark'", "Read the effective theme, including the system preference."],
+  ["set('light' | 'dark')", "void", "Apply and persist an explicit choice."],
+  ["reset()", "void", "Remove the saved override and follow the system again."],
+  ["destroy()", "void", "Remove this controller’s listeners and release its initialization state."],
+];
+---
+
+<DocsLayout
+  title="JavaScript APIs"
+  description="Two optional behaviors. Explicit initialization, a small typed interface, and cleanup you can connect to your application lifecycle."
+  section="Build with Lineframe"
+  source="website/src/pages/docs/javascript.astro"
+>
+  <div class="lf-prose docs-prose">
+    <h2 id="choose-an-entry">Choose one initialization path</h2>
+    <ul>
+      <li>
+        <strong>Plain HTML:</strong> the version-pinned <code>lineframe.js</code>
+        browser script automatically initializes theme preference and article navigation.
+      </li>
+      <li>
+        <strong>A bundled application:</strong> import <code>initTheme</code> and
+        <code>initToc</code>, then initialize them in your browser lifecycle.
+      </li>
+      <li>
+        <strong>An existing installation:</strong> separate
+        <code>lineframe-theme.js</code> and <code>lineframe-toc.js</code>
+        browser entries remain supported.
+      </li>
+    </ul>
+    <p>
+      Do not mix auto-initialization scripts and explicit module setup without a deliberate
+      ownership model. Idempotent initialization prevents duplicate listeners, but it is not a
+      reason to load the same library twice.
+    </p>
+  </div>
+  <CodeBlock id="js-lifecycle" code={lifecycle} language="ts" label="Framework-neutral lifecycle" />
+  <div class="lf-prose docs-prose">
+    <p>
+      The module has no import-time browser side effects. You may import it during server rendering,
+      but the initialization functions require a browser. Call the returned teardown function when
+      the owning view is removed.
+    </p>
+    <p>
+      Theme preference is shared across the document. Give it one application-level owner rather
+      than destroying the shared controller whenever an individual button unmounts. Repeated
+      initialization is idempotent, not reference-counted.
+    </p>
+  </div>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="theme-api">Theme controller</h2>
+      <p>
+        <code>initTheme()</code> returns a controller. It follows the system until a person chooses a
+        theme, keeps controls in sync, and persists that choice when browser storage is available.
+      </p>
+    </div>
+    <div
+      class="lf-table-wrap docs-reference-table"
+      role="region"
+      aria-label="Theme controller methods"
+      tabindex="0"
+    >
+      <table class="lf-table">
+        <caption>The theme API</caption>
+        <thead
+          ><tr
+            ><th scope="col">Method</th><th scope="col">Returns</th><th scope="col">Behavior</th
+            ></tr
+          ></thead
+        >
+        <tbody>
+          {
+            themeMethods.map(([method, returns, behavior]) => (
+              <tr>
+                <>
+                  <th scope="row">
+                    <code>{method}</code>
+                  </th>
+                  <td>
+                    <code>{returns}</code>
+                  </td>
+                  <td>{behavior}</td>
+                </>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <CodeBlock
+      id="js-theme"
+      language="ts"
+      label="Explicit theme changes"
+      code={`const theme = initTheme();
+
+console.log(theme.current()); // 'light' or 'dark'
+theme.set('dark');            // Persist an explicit choice.
+theme.reset();                // Follow the system again.
+
+// When the owning application is torn down:
+theme.destroy();`}
+    />
+    <div class="lf-prose docs-prose">
+      <p>
+        <code>set()</code> accepts only <code>'light'</code> or <code>'dark'</code>; use <code
+          >reset()</code
+        >, not <code>set('system')</code>, to follow the system. The saved preference uses the <code
+          >lineframe-theme</code
+        > storage key.
+      </p>
+      <p>
+        The controller owns root theme state. Select accent palettes with
+        <code>data-lineframe-accent</code> on a page or component; do not manually compete with root <code
+          >data-theme</code
+        > updates.
+      </p>
+      <h3 id="browser-global">The compatible browser global</h3>
+      <p>
+        The CDN entry preserves <code>window.LineframeTheme</code> with the same four methods. Use it
+        after the theme script has loaded.
+      </p>
+    </div>
+    <CodeBlock
+      id="js-global"
+      language="js"
+      label="Browser-script consumers"
+      code={`const theme = window.LineframeTheme;
+if (theme) {
+  console.log(theme.current());
+  // Call from a real application action when appropriate:
+  // theme.set('dark');
+  // theme.reset();
+}`}
+    />
+    <div class="lf-prose docs-prose">
+      <p>
+        For standard controls, use the existing
+        <a href={url("docs/tokens/#theme-preference")}>toggle and reset data attributes</a>
+        instead of adding a second click handler.
+      </p>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="toc-api">Article table of contents</h2>
+      <p>
+        <code>initToc()</code> initializes matching article navigations already in the document and returns
+        a cleanup function. It uses native anchors, keyboard-operable disclosure controls, and a current-section
+        state. There is no continuously running DOM scan.
+      </p>
+    </div>
+    <CodeBlock
+      id="js-toc"
+      language="ts"
+      label="Initialize after rendering the article"
+      code={`import { initToc } from '@shanmukh98/lineframe-ui';
+
+const destroyToc = initToc();
+
+// Before removing or replacing the article:
+destroyToc();
+
+// After rendering a replacement article, initialize again.
+// const destroyNextToc = initToc();`}
+    />
+    <div class="lf-prose docs-prose">
+      <p>
+        The required structure is documented in the
+        <a href={url("docs/components/navigation/#article-toc")}>live navigation example</a>. Each
+        TOC belongs inside its <code>data-lineframe-article</code> and needs a <code
+          >data-lineframe-toc-list</code
+        >. The article’s
+        <code>data-lineframe-prose</code> supplies its <code>h2</code> and
+        <code>h3</code> headings.
+      </p>
+      <p>
+        Teardown removes listeners, cancels pending updates, and restores controller-managed markup
+        and state. Reinitialize after you replace the article content. Prefer your own stable,
+        unique heading IDs when links need to survive later edits.
+      </p>
+      <h3 id="progressive-enhancement">Progressive enhancement is the fallback</h3>
+      <p>
+        With JavaScript disabled, the prose still exists, native disclosures still work, and
+        ordinary links still navigate. Keep an initially hidden TOC so an empty navigation does not
+        occupy the page before initialization.
+      </p>
+      <p>
+        Read the focused implementations in
+        <a href={sourceUrl("src/behaviors/")}>src/behaviors/</a>, or start with the
+        <a href={url("docs/contributing/")}>contributor guide</a> if you find an edge case.
+      </p>
+    </div>
+  </section>
+</DocsLayout>

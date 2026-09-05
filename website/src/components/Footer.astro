@@ -1,0 +1,19 @@
+---
+import { site } from "../lib/site";
+import { sourceUrl, url } from "../lib/urls";
+---
+
+<footer class="lf-footer site-footer">
+  <div class="lf-footer__inner site-footer-inner">
+    <p>Lineframe UI <span>v{site.version} · MIT licensed</span></p>
+    <nav class="site-footer-links" aria-label="Footer">
+      <a href={url("docs/philosophy/")}>Philosophy & credits</a>
+      <a href={url("docs/contributing/")}>Contribute</a>
+      <a href={sourceUrl("LICENSE")}>License</a>
+      <a href={site.repository}>GitHub</a>
+    </nav>
+    <button class="site-text-button" data-lineframe-theme-reset type="button">
+      Use system theme
+    </button>
+  </div>
+</footer>

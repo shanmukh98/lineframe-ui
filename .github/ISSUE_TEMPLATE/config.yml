@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation and examples
+    url: https://shanmukh98.github.io/lineframe-ui/
+    about: Check component markup, customization, and documented limitations.
+  - name: Contributor guide
+    url: https://github.com/shanmukh98/lineframe-ui/blob/main/CONTRIBUTING.md
+    about: Find source locations, validation commands, and the release process.

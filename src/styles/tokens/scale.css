@@ -1,0 +1,22 @@
+@layer lineframe.tokens {
+  :root {
+    --lf-space-1: 0.25rem;
+    --lf-space-2: 0.5rem;
+    --lf-space-3: 0.75rem;
+    --lf-space-4: 1rem;
+    --lf-space-6: 1.5rem;
+    --lf-space-8: 2rem;
+    --lf-space-12: 3rem;
+    --lf-space-16: 4rem;
+    --lf-radius-sm: 0.25rem;
+    --lf-radius-md: 0.4rem;
+    --lf-radius-lg: 0.7rem;
+    --lf-radius: var(--lf-radius-lg);
+    --lf-frame-width: 78rem;
+    --lf-reading-width: 45rem;
+    --lf-article-rail-width: 13rem;
+    --lf-nav-height: 4.25rem;
+    --lf-font-sans: "Geist Variable", "Geist", system-ui, sans-serif;
+    --lf-font-mono: "Geist Mono Variable", "Geist Mono", "SFMono-Regular", Consolas, monospace;
+  }
+}

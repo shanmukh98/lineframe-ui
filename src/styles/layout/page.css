@@ -1,0 +1,25 @@
+@layer lineframe.layout {
+  .lf-page {
+    min-height: calc(100vh - var(--lf-nav-height));
+  }
+
+  .lf-page__header {
+    padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 4vw, 3.5rem);
+    border-bottom: 1px solid var(--lf-border);
+  }
+
+  .lf-page__title {
+    max-width: 20ch;
+    margin: 0;
+    font-size: clamp(2.3rem, 6vw, 4.8rem);
+    font-weight: 520;
+    letter-spacing: -0.055em;
+    line-height: 1;
+  }
+
+  @media (max-width: 40rem) {
+    .lf-page__header {
+      padding-inline: 1.25rem;
+    }
+  }
+}

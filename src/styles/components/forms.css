@@ -1,0 +1,97 @@
+@layer lineframe.components {
+  .lf-field {
+    display: grid;
+    min-inline-size: 0;
+    gap: var(--lf-space-2);
+  }
+
+  .lf-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .lf-hint,
+  .lf-error-text {
+    margin: 0;
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .lf-hint {
+    color: var(--lf-muted);
+  }
+
+  .lf-error-text {
+    color: var(--lf-danger);
+  }
+
+  .lf-input,
+  .lf-select,
+  .lf-textarea {
+    inline-size: 100%;
+    min-inline-size: 0;
+    min-block-size: 2.75rem;
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--lf-control-border);
+    border-radius: var(--lf-radius-md);
+    background: var(--lf-panel);
+    color: var(--lf-text);
+    font: inherit;
+    line-height: 1.4;
+  }
+
+  .lf-select {
+    padding-inline-end: 2rem;
+  }
+
+  .lf-textarea {
+    min-block-size: 7rem;
+    resize: vertical;
+  }
+
+  .lf-input::placeholder,
+  .lf-textarea::placeholder {
+    opacity: 1;
+    color: var(--lf-faint);
+  }
+
+  .lf-input[readonly],
+  .lf-textarea[readonly] {
+    background: var(--lf-code);
+  }
+
+  .lf-input[aria-invalid="true"],
+  .lf-select[aria-invalid="true"],
+  .lf-textarea[aria-invalid="true"] {
+    border-color: var(--lf-danger);
+  }
+
+  .lf-input:disabled,
+  .lf-select:disabled,
+  .lf-textarea:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .lf-choice {
+    display: flex;
+    min-block-size: 2.75rem;
+    align-items: center;
+    gap: var(--lf-space-3);
+    cursor: pointer;
+  }
+
+  .lf-checkbox,
+  .lf-radio {
+    flex: 0 0 auto;
+    inline-size: 1.15rem;
+    block-size: 1.15rem;
+    margin: 0;
+    accent-color: var(--lf-accent);
+  }
+
+  .lf-choice:has(:disabled) {
+    color: var(--lf-muted);
+    cursor: not-allowed;
+  }
+}

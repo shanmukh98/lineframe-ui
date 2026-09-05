@@ -1,0 +1,27 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  id: string;
+  code: string;
+  language?: string;
+  label?: string;
+}
+
+const { id, code, language = "html", label = language } = Astro.props;
+---
+
+<figure class="code-block" aria-labelledby={`${id}-caption`}>
+  <figcaption class="code-toolbar" id={`${id}-caption`}>
+    <span class="code-label">{label}</span>
+    <div class="code-copy-tools">
+      <span class="code-copy-status" data-copy-status={id} role="status"></span>
+      <button class="code-copy-button" type="button" data-copy-code={id} hidden>
+        <Icon name="copy" />
+        <span data-copy-label>Copy</span>
+        <span class="lf-visually-hidden">{label} code</span>
+      </button>
+    </div>
+  </figcaption>
+  <pre tabindex="0" aria-label={`${label} code example`}><code id={id}>{code.trim()}</code></pre>
+</figure>

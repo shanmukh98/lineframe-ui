@@ -1,0 +1,31 @@
+---
+import NavLinks from "./NavLinks.astro";
+import Icon from "./Icon.astro";
+import { site } from "../lib/site";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<aside class="docs-sidebar">
+  <nav class="docs-nav-desktop" aria-label="Documentation">
+    <div class="docs-nav-heading">
+      <span>Documentation</span>
+      <span class="docs-version">v{site.version}</span>
+    </div>
+    <NavLinks />
+  </nav>
+  <details class="docs-nav-mobile">
+    <summary>
+      <Icon name="menu" />
+      <span>Documentation <span class="docs-nav-current">/ {title}</span></span>
+      <Icon name="chevron-down" class="docs-nav-chevron" />
+    </summary>
+    <nav aria-label="Documentation">
+      <NavLinks />
+    </nav>
+  </details>
+</aside>

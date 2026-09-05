@@ -1,0 +1,134 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+import { site } from "../../lib/site";
+import { url } from "../../lib/urls";
+import {
+  cdnInstall,
+  legacyInstall,
+  moduleInstall,
+  selfHostedInstall,
+} from "../../examples/installation";
+---
+
+<DocsLayout
+  title="Installation"
+  description="Start with a version-pinned CDN, serve the files yourself, or use the GitHub release package in a bundled application."
+  section="Start here"
+  source="website/src/pages/docs/installation.astro"
+>
+  <div class="lf-prose docs-prose">
+    <h2 id="cdn">The quickest path: a CDN</h2>
+    <p>
+      Copy this complete document into an HTML file. The links are pinned to
+      <strong>v{site.version}</strong>, so a future release will not silently change your site.
+    </p>
+  </div>
+  <CodeBlock id="cdn-install" code={cdnInstall} label="index.html" />
+  <div class="lf-prose docs-prose">
+    <p>
+      Load <code>lineframe.js</code> synchronously <strong>before the stylesheet</strong>. It
+      applies a saved theme before the first styled paint, then initializes the optional table of
+      contents when the document is ready. Do not mark this combined script <code>async</code> or <code
+        >defer</code
+      > if you rely on that ordering.
+    </p>
+    <p>
+      Keep <code>width=device-width, initial-scale=1</code>. Never disable zoom or cap the
+      viewport’s maximum scale. Add <code>lf-site</code> to the body for the page foundation, then use
+      the components you need.
+    </p>
+    <h3 id="css-only">Only need CSS?</h3>
+    <p>
+      Leave out the script. All CSS components still work, and the theme follows the system through
+      CSS. Manual theme controls and generated article navigation require the optional behavior
+      script; do not add nonfunctional custom controls in a CSS-only page.
+    </p>
+  </div>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="self-hosting">Self-hosting</h2>
+      <p>
+        Download <a href={`${site.cdn}/lineframe.css`}>lineframe.css</a> and
+        <a href={`${site.cdn}/lineframe.js`}>lineframe.js</a> from the same release. Put them in your
+        own public assets directory and update the paths for your site.
+      </p>
+    </div>
+    <CodeBlock id="self-hosted-install" code={selfHostedInstall} label="Self-hosted assets" />
+    <div class="lf-prose docs-prose">
+      <p>
+        The main stylesheet already includes all four palettes. The generated
+        <code>lineframe-accents.css</code> file remains available for legacy or separate palette-loading
+        setups; it is not an extra request required by the v0.7.0 bundle.
+      </p>
+      <p>
+        To use icons, also host <code>lineframe-icons.svg</code> or the individual SVG files. External
+        SVG sprites work most reliably from the same origin. See the <a href={url("docs/icons/")}
+          >icon guide</a
+        >.
+      </p>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="package">Using a package manager</h2>
+      <p>
+        Install the npm-compatible <strong>GitHub release tarball</strong>. The scoped package name
+        is <code>@shanmukh98/lineframe-ui</code>; this is not an instruction to install a package
+        from the npm registry.
+      </p>
+    </div>
+    <CodeBlock
+      id="package-install"
+      code={`npm install ${site.release}`}
+      label="Terminal"
+      language="sh"
+    />
+    <CodeBlock id="module-install" code={moduleInstall} label="Application module" language="js" />
+    <div class="lf-prose docs-prose">
+      <p>
+        A bundler must understand CSS imports. Initialize the behaviors in a browser lifecycle after
+        the relevant markup exists, not during server rendering. Call the returned cleanup functions
+        when their owning page or application unmounts. See <a href={url("docs/javascript/")}
+          >JavaScript APIs</a
+        >
+        for theme methods and lifecycle details.
+      </p>
+      <p>
+        Importing modules is safe without a browser. Importing the CSS is separate: the JavaScript
+        API does not automatically add styles. A client-side module runs later than a synchronous
+        head script, so consider your rendering strategy if avoiding a saved-theme flash is
+        important.
+      </p>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="separate-scripts">Existing separate-script installations</h2>
+      <p>
+        The legacy filenames remain supported. Use either the combined
+        <code>lineframe.js</code> file or these separate entries—not both.
+      </p>
+    </div>
+    <CodeBlock id="legacy-install" code={legacyInstall} label="Separate browser scripts" />
+  </section>
+
+  <div class="lf-prose docs-prose">
+    <h2 id="browser-support">Browser expectations</h2>
+    <p>
+      Lineframe targets modern browsers supporting the Baseline 2024 CSS features used here: cascade
+      layers, <code>:has()</code>, <code>color-mix()</code>, and
+      <code>light-dark()</code>. The distributed CSS is not a compatibility polyfill. Older browsers
+      or webviews without these features are not supported.
+    </p>
+    <h2 id="next-step">Next: make it feel like your project</h2>
+    <p>
+      Choose one of the paired <a href={url("docs/tokens/")}>accent palettes</a>, set your content
+      width, and start composing the
+      <a href={url("docs/components/")}>native components</a>.
+    </p>
+  </div>
+</DocsLayout>

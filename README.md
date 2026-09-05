@@ -1,139 +1,149 @@
 # Lineframe UI
 
-Lineframe UI is a small, dependency-free CSS system for personal sites,
-technical blogs, and documentation. It combines warm editorial typography,
-hairline frames, responsive split sections, and deliberately restrained color.
+A framework-agnostic UI library for content-first websites. Quiet structure,
+readable typography, native controls, and accents that adapt to light and dark.
+No runtime dependencies. MIT licensed.
 
-The design is original. It is inspired by broad editorial-web principles such
-as visible grids, generous spacing, quiet metadata, and strong type hierarchy.
+**[Documentation and live examples](https://shanmukh98.github.io/lineframe-ui/)** |
+[Design philosophy](https://shanmukh98.github.io/lineframe-ui/docs/philosophy/) |
+[Contributing](CONTRIBUTING.md)
 
-## Use
+## Start with HTML
+
+Add the version-pinned browser assets to the document head. The optional script
+initializes theme controls and article navigation; native components and automatic
+system colors work without JavaScript.
 
 ```html
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script
-  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.6.0/lineframe-theme.js"
-></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.7.0/lineframe.js"></script>
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.6.0/lineframe.css"
->
-<script
-  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.6.0/lineframe-toc.js"
-  defer
-></script>
+  href="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.7.0/lineframe.css"
+/>
+```
+
+Opt the page into the foundation styles and select an accent:
+
+```html
 <body class="lf-site" data-lineframe-accent="slate">
+  <main class="lf-container">
+    <h1>Make room for the content.</h1>
+    <button class="lf-button" type="button" data-lineframe-theme-toggle>
+      <span data-lineframe-theme-label>Dark</span>
+    </button>
+  </main>
+</body>
 ```
 
-Do not cap the viewport's scale or disable user zoom. When self-hosting, keep
-`lineframe.css` and `lineframe-accents.css` together; the main stylesheet imports
-the palette module.
+Keep zoom enabled. Load the script before styles when using persisted themes to
+avoid a wrong-theme flash. Self-hosting the browser assets is also supported.
+The combined stylesheet includes its palette definitions.
 
-The theme script uses the browser's `prefers-color-scheme` value by default.
-Add a manual toggle anywhere in the page:
+## Use with a bundler
+
+Install the versioned **npm-compatible GitHub Release tarball**:
+
+```sh
+npm install https://github.com/shanmukh98/lineframe-ui/releases/download/v0.7.0/shanmukh98-lineframe-ui-0.7.0.tgz
+```
+
+The package is **not published to the public npm registry**. This URL is a
+release artifact, not a registry shortcut.
+
+```js
+import "@shanmukh98/lineframe-ui/styles.css";
+import { initTheme, initToc } from "@shanmukh98/lineframe-ui";
+
+// Call after mounting your client-side interface.
+const theme = initTheme();
+const destroyToc = initToc();
+```
+
+Call `destroyToc()` and `theme.destroy()` when unmounting. Initialization is
+idempotent. Importing the module is safe during server rendering; initializing
+it requires a browser.
+
+For smaller CSS compositions, import the foundation **first**, followed by the
+components you use:
+
+```js
+import "@shanmukh98/lineframe-ui/styles/base.css";
+import "@shanmukh98/lineframe-ui/styles/components/buttons.css";
+import "@shanmukh98/lineframe-ui/styles/components/forms.css";
+```
+
+## A small, composable system
+
+| Area        | Included                                                                                 |
+| ----------- | ---------------------------------------------------------------------------------------- |
+| Foundations | Typography, spacing, surfaces, paired accent palettes, focus and reduced-motion defaults |
+| Layout      | Containers, stacks, clusters, grids, frames, cards, editorial sections                   |
+| Controls    | Buttons, labeled native fields, selects, checkboxes, radios, textareas                   |
+| Content     | Prose, tables, native disclosures, alerts, badges, writing lists                         |
+| Navigation  | Headers, back links, pagination, collapsible article TOCs, skip links                    |
+| Assets      | Twelve original SVG icons, individual files, a sprite, and source maps                   |
+| Behaviors   | Optional typed theme and TOC controllers with explicit teardown                          |
+
+Native semantics come first. A class cannot supply a missing label, disable an
+anchor, or make arbitrary markup accessible. Examples document keyboard behavior,
+required markup, and consumer responsibilities rather than promising blanket
+WCAG conformance.
+
+Lineframe targets modern browsers with Baseline 2024 CSS features, including
+`light-dark()`, `color-mix()`, and cascade layers. Font names are optional tokens;
+the runtime library never requests remote fonts, analytics, or third-party scripts.
+
+## Themes and page accents
+
+Select `slate`, `violet`, `moss`, or `clay` on a page or component:
 
 ```html
-<button class="lf-theme-toggle" data-lineframe-theme-toggle type="button">
-  <span class="lf-theme-toggle__mark" aria-hidden="true"></span>
-  <span class="lf-theme-toggle__label" data-lineframe-theme-label>Dark</span>
-</button>
+<section data-lineframe-accent="violet">
+  <span class="lf-tag">A different accent, the same system</span>
+</section>
 ```
 
-Manual choices are stored under `lineframe-theme`. Call
-`window.LineframeTheme.reset()` to return to the browser preference.
+The single authoritative palette module is
+[`src/styles/tokens/accents.css`](src/styles/tokens/accents.css). Every preset
+defines `--lf-accent-light` and `--lf-accent-dark`; derived fills, borders, and
+focus colors are calculated at the selected scope. Edit that module and rebuild,
+or add a paired preset in your application's stylesheet.
 
-## Per-page accents
+Themes follow the system by default. Manual choices persist until reset:
 
-All named palettes live in **`lineframe-accents.css`**. Each defines
-`--lf-accent-light` and `--lf-accent-dark`; the theme selects the right value.
-The included presets are `slate` (default), `violet`, `moss`, and `clay`.
-
-```html
-<body class="lf-site" data-lineframe-accent="violet">
+```js
+theme.set("dark");
+theme.reset(); // Follow the system again.
 ```
 
-To change a palette, edit its two colors in that module. To add one, add a
-selector with the same paired tokens:
+The CDN API remains available as `window.LineframeTheme`. Existing
+`lineframe-theme.js` and `lineframe-toc.js` entrypoints are still supported; use
+either those separate scripts or the combined `lineframe.js`.
 
-```css
-[data-lineframe-accent="ocean"] {
-  --lf-accent-light: #4f6b7a;
-  --lf-accent-dark: #86a1ad;
-}
+## Develop and contribute
+
+Use Node.js 22.12 or newer (24 recommended):
+
+```sh
+npm ci
+npm run dev
 ```
 
-Use `data-lineframe-accent="ocean"` on the body or a scoped component. The
-library recomputes text, fills, borders, selection, and focus colors at that
-scope, so tints do not accidentally inherit another page's palette. Keep
-accent text at least 4.5:1 against the backgrounds used in each theme.
+Author `src/`, not the generated root bundles. The website lives in `website/`;
+build, package, and test tooling are separate from the runtime library.
+`AGENTS.md` files capture the design and engineering constraints for contributors
+and coding assistants.
 
-Existing direct `--lf-accent` overrides still work, but they use one color in
-both modes. Prefer named, paired palettes for new pages.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the source map, focused commands,
+browser setup, visual review, and release process. Run `npm run verify` before
+requesting final review, and include evidence for the components you changed.
 
-In Jekyll, pages select a palette by name rather than repeating hex values:
+## Inspiration and license
 
-```yaml
----
-accent: violet
----
-```
+[cobanov.dev](https://cobanov.dev/) inspired the editorial restraint;
+[tv.cobanov.dev](https://tv.cobanov.dev/) started the journey. Lineframe's code,
+components, and icons are original. No source, artwork, branding, or endorsement
+from those sites is implied.
 
-```html
-<body
-  class="lf-site"
-  data-lineframe-accent="{{ page.accent | default: site.accent | default: 'slate' | escape }}"
->
-```
-
-Set `accent: slate` in `_config.yml` for the site default. Keep theme selection
-on the root element under the theme controller, not in each page's front matter.
-
-## Components
-
-- `lf-shell`, `lf-frame`: centered framed page structure
-- `lf-header`, `lf-nav`: responsive navigation
-- `lf-theme-toggle`: system-aware light/dark control
-- `lf-hero`: editorial introduction
-- `lf-section`: label/content split section
-- `lf-post-list`: writing or project index
-- `lf-article`: readable long-form layout
-- `lf-toc`: generated sticky article navigation
-- `lf-prose`: Markdown typography
-- `lf-button`, `lf-tag`, `lf-meta`: small interface elements
-
-Open `demo/index.html` to preview both themes and several accent colors.
-
-## Article table of contents
-
-Add an initially hidden TOC before the prose. The script fills it from `h2`
-and `h3` elements, makes links clickable, and updates the active section while
-the reader scrolls.
-
-```html
-<div class="lf-article__layout" data-lineframe-article>
-  <header class="lf-article__header"><!-- Title and metadata --></header>
-  <aside class="lf-article__rail">
-    <nav class="lf-toc" data-lineframe-toc aria-label="On this page" hidden>
-      <p class="lf-toc__title">On this page</p>
-      <button class="lf-toc__toggle" type="button" aria-expanded="false">
-        <span>On this page</span>
-        <span class="lf-toc__toggle-mark" aria-hidden="true">+</span>
-      </button>
-      <ol class="lf-toc__list" data-lineframe-toc-list></ol>
-    </nav>
-  </aside>
-  <div class="lf-article__body">
-    <div class="lf-prose" data-lineframe-prose>
-      <!-- Article headings and content -->
-    </div>
-  </div>
-</div>
-```
-
-On wide screens the TOC stays on the left as the page scrolls. At narrower
-widths it becomes a collapsible block above the article.
-
-## Development
-
-Run `npm test` with Node.js 18 or newer for the dependency-free regression
-tests. Preview `demo/index.html` in both themes when changing shared styles.
+See [CREDITS.md](CREDITS.md), [CHANGELOG.md](CHANGELOG.md), and the [MIT license](LICENSE).

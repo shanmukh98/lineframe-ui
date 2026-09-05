@@ -1,0 +1,65 @@
+@layer lineframe.components {
+  :root:not([data-lineframe-theme-ready]) [data-lineframe-theme-toggle],
+  :root:not([data-lineframe-theme-ready]) [data-lineframe-theme-reset] {
+    display: none;
+  }
+
+  .lf-theme-toggle {
+    display: inline-flex;
+    min-height: 2.15rem;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--lf-accent-medium);
+    border-radius: 0.4rem;
+    background: transparent;
+    color: var(--lf-muted);
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .lf-theme-toggle:hover {
+    border-color: var(--lf-accent);
+    color: var(--lf-text);
+  }
+
+  .lf-theme-toggle__mark {
+    position: relative;
+    width: 0.78rem;
+    height: 0.78rem;
+    overflow: hidden;
+    border: 1px solid var(--lf-border-strong);
+    border-radius: 50%;
+    background: var(--lf-panel-raised);
+  }
+
+  .lf-theme-toggle__mark::after {
+    position: absolute;
+    inset: -1px 50% -1px -1px;
+    content: "";
+    background: var(--lf-accent);
+  }
+
+  [data-theme="dark"] .lf-theme-toggle__mark::after {
+    inset: -1px -1px -1px 50%;
+  }
+
+  @media (max-width: 40rem) {
+    .lf-theme-toggle {
+      width: 2.15rem;
+      padding-inline: 0;
+      justify-content: center;
+    }
+
+    .lf-theme-toggle__label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+}

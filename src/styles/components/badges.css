@@ -1,0 +1,14 @@
+@layer lineframe.components {
+  .lf-tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.7rem;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--lf-accent-medium);
+    border-radius: 0.32rem;
+    background: var(--lf-accent-soft);
+    color: color-mix(in srgb, var(--lf-accent) 72%, var(--lf-text));
+    font-family: var(--lf-font-mono);
+    font-size: 0.68rem;
+  }
+}

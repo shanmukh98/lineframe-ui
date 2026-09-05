@@ -1,0 +1,42 @@
+@layer lineframe.components {
+  .lf-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .lf-card {
+    min-height: 12rem;
+    padding: 1.25rem;
+    border: 1px solid var(--lf-border);
+    border-radius: var(--lf-radius);
+    background: var(--lf-panel);
+    text-decoration: none;
+    transition:
+      border-color 150ms ease,
+      transform 150ms ease;
+  }
+
+  a.lf-card:hover {
+    border-color: var(--lf-accent);
+    transform: translateY(-2px);
+  }
+
+  .lf-card__title {
+    margin: 0;
+    font-size: 1.08rem;
+    font-weight: 560;
+  }
+
+  .lf-card__text {
+    margin: 0.6rem 0 0;
+    color: var(--lf-muted);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 40rem) {
+    .lf-card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

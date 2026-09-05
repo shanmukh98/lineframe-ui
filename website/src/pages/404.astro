@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { url } from "../lib/urls";
+---
+
+<BaseLayout
+  title="Page not found"
+  description="This page is not part of the Lineframe UI documentation. Find your way back to the guides or the component reference."
+  noindex
+  canonicalPath={url("404.html")}
+>
+  <main class="site-not-found" id="main-content" tabindex="-1">
+    <p class="lf-kicker">404 / A missing piece</p>
+    <h1>This page is outside the frame.</h1>
+    <p>
+      The address may have changed, or the link may be incomplete. The documentation and component
+      guides are a good place to pick up again.
+    </p>
+    <div class="lf-cluster">
+      <a class="lf-button lf-button--solid" href={url("docs/")}>
+        Open the documentation <Icon name="arrow-right" />
+      </a>
+      <a class="lf-button" href={url()}>Back to Lineframe UI</a>
+    </div>
+    <nav aria-label="Useful documentation links" class="lf-cluster">
+      <a href={url("docs/installation/")}>Installation</a>
+      <a href={url("docs/components/")}>Components</a>
+      <a href={url("docs/javascript/")}>JavaScript APIs</a>
+    </nav>
+  </main>
+</BaseLayout>

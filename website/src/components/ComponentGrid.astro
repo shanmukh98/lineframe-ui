@@ -1,0 +1,20 @@
+---
+import Icon from "./Icon.astro";
+import { componentGroups } from "../lib/site";
+import { url } from "../lib/urls";
+---
+
+<div class="docs-component-grid">
+  {
+    componentGroups.map((group) => (
+      <a class="lf-card docs-component-card" href={url(group.path)}>
+        <Icon name={group.icon} class="docs-component-icon" />
+        <h2 class="lf-card__title">{group.title}</h2>
+        <p class="lf-card__text">{group.description}</p>
+        <span class="docs-card-link">
+          View examples <Icon name="arrow-right" />
+        </span>
+      </a>
+    ))
+  }
+</div>

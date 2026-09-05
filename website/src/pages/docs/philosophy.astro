@@ -1,0 +1,37 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import { Content } from "../../content/philosophy.md";
+import { sourceUrl, url } from "../../lib/urls";
+---
+
+<DocsLayout
+  title="Philosophy & credits"
+  description="An original, content-first design with a modest scope—and a clear acknowledgment of the ideas and people that helped it begin."
+  section="Make it yours"
+  accent="clay"
+  source="website/src/content/philosophy.md"
+>
+  <div class="lf-prose docs-prose">
+    <Content />
+    <h2 id="typeface-credits">The type on this website</h2>
+    <p>
+      This documentation optionally uses <strong>Geist</strong> and
+      <strong>Geist Mono</strong>, by the
+      <a href="https://github.com/vercel/geist-font">Geist Project Authors</a>, distributed through <a
+        href="https://fontsource.org/">Fontsource</a
+      >. Their Latin variable-font files are served locally; no third-party font service is
+      contacted.
+    </p>
+    <p>
+      Both typefaces are licensed under the SIL Open Font License 1.1. The unmodified license
+      notices from the installed font packages are included here:
+      <a href={url("licenses/geist-OFL.txt")}>Geist license</a> and
+      <a href={url("licenses/geist-mono-OFL.txt")}>Geist Mono license</a>. The library itself works
+      with system fonts or your own font choices.
+    </p>
+    <p>
+      For Lineframe’s own code and original icons, see the
+      <a href={sourceUrl("LICENSE")}>MIT license</a>.
+    </p>
+  </div>
+</DocsLayout>

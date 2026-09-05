@@ -1,0 +1,117 @@
+@layer lineframe.layout {
+  .lf-header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    border-bottom: 1px solid var(--lf-border);
+    background: color-mix(in srgb, var(--lf-bg) 90%, transparent);
+    backdrop-filter: blur(16px);
+  }
+
+  .lf-header__inner {
+    display: flex;
+    min-height: var(--lf-nav-height);
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: min(100%, var(--lf-frame-width));
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .lf-header__actions {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.8rem, 2vw, 1.5rem);
+  }
+
+  .lf-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--lf-text);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+
+  .lf-brand__mark {
+    position: relative;
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 1px solid var(--lf-border-strong);
+    border-radius: 0.32rem;
+    background: var(--lf-panel-raised);
+  }
+
+  .lf-brand__mark::after {
+    position: absolute;
+    content: "";
+    inset: 0.24rem;
+    border-left: 2px solid var(--lf-accent);
+    border-bottom: 2px solid var(--lf-accent);
+  }
+
+  .lf-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+
+  .lf-nav a {
+    position: relative;
+    color: var(--lf-muted);
+    font-size: 0.84rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .lf-nav a::after {
+    position: absolute;
+    right: 0;
+    bottom: -0.5rem;
+    left: 0;
+    height: 1px;
+    content: "";
+    background: var(--lf-accent);
+    opacity: 0;
+    transform: scaleX(0.4);
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease;
+  }
+
+  .lf-nav a:hover,
+  .lf-nav a[aria-current="page"] {
+    color: var(--lf-text);
+  }
+
+  .lf-nav a:hover::after,
+  .lf-nav a[aria-current="page"]::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  @media (max-width: 40rem) {
+    .lf-header__inner {
+      gap: 1rem;
+    }
+
+    .lf-header__actions {
+      gap: 0.65rem;
+    }
+
+    .lf-nav {
+      gap: 0.9rem;
+    }
+
+    .lf-nav a {
+      font-size: 0.78rem;
+    }
+
+    .lf-nav .lf-nav__optional {
+      display: none;
+    }
+  }
+}

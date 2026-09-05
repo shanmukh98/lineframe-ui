@@ -1,0 +1,9 @@
+node_modules/
+dist/
+website/dist/
+website/.astro/
+website/public/assets/
+playwright-report/
+test-results/
+*.tgz
+.DS_Store

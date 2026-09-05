@@ -1,0 +1,138 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import Icon from "../../components/Icon.astro";
+import Demo from "../../components/Demo.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+import { asset, url, sourceUrl } from "../../lib/urls";
+
+const names = [
+  "arrow-left",
+  "arrow-right",
+  "check",
+  "chevron-down",
+  "close",
+  "copy",
+  "external-link",
+  "info",
+  "menu",
+  "moon",
+  "sun",
+  "warning",
+];
+const decorative = `<a class="lf-button" href="${url("docs/installation/")}">
+  Read the guide
+  <svg class="lf-icon" aria-hidden="true" focusable="false">
+    <use href="${asset("lineframe-icons.svg")}#arrow-right"></use>
+  </svg>
+</a>`;
+const namedControl = `<button class="lf-button" type="button"
+  data-lineframe-theme-toggle aria-label="Switch color theme">
+  <svg class="lf-icon" aria-hidden="true" focusable="false">
+    <use href="${asset("lineframe-icons.svg")}#moon"></use>
+  </svg>
+</button>`;
+---
+
+<DocsLayout
+  title="Icons"
+  description="Twelve original line icons for the small moments an interface needs. One consistent 24×24 grid, available as a sprite or standalone SVGs."
+  section="Build with Lineframe"
+  accent="violet"
+  source="website/src/pages/docs/icons.astro"
+>
+  <div class="lf-prose docs-prose">
+    <p>
+      The Lineframe icon set is intentionally small: navigation, status, copying, and theme
+      controls. Stroke icons inherit the surrounding text color when used inline or through the
+      sprite. They do not require an icon font or a JavaScript runtime.
+    </p>
+    <h2 id="icon-set">The complete set</h2>
+    <p>Choose an icon to download its standalone SVG source.</p>
+  </div>
+  <ul class="docs-icon-grid">
+    {
+      names.map((name) => (
+        <li>
+          <a href={asset(`icons/${name}.svg`)} download={`${name}.svg`}>
+            <Icon name={name} />
+            <code>{name}</code>
+            <span class="lf-visually-hidden">Download SVG</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <div class="lf-cluster">
+    <a class="lf-button" href={asset("lineframe-icons.svg")} download="lineframe-icons.svg">
+      Download the sprite <Icon name="arrow-right" />
+    </a>
+    <a class="lf-button lf-button--quiet" href={sourceUrl("src/icons/")}>View the source</a>
+  </div>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="decorative-icons">Let the text carry the meaning</h2>
+      <p>
+        An icon next to an already descriptive label is usually decorative. Put <code
+          >aria-hidden="true"</code
+        > on the SVG so its name is not repeated.
+        <code>lf-icon</code> supplies consistent sizing and stroke presentation.
+      </p>
+    </div>
+    <Demo
+      id="icon-decorative"
+      title="A decorative icon beside a descriptive label"
+      code={decorative}
+    />
+    <div class="lf-prose docs-prose">
+      <p>
+        These paths point to this website’s base-aware assets directory. When copying into your own
+        project, replace the sprite path with your local asset URL. Serve external sprites from the
+        same origin to avoid cross-origin <code>&lt;use&gt;</code> restrictions.
+      </p>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="icon-only-controls">An icon-only control needs a name</h2>
+      <p>
+        Give the button a meaningful accessible name, not the icon’s filename. This example is a
+        working theme toggle. The optional theme controller updates its accessible label to describe
+        the next available theme.
+      </p>
+    </div>
+    <Demo id="icon-named-control" title="A named, working theme action" code={namedControl} />
+    <div class="lf-prose docs-prose">
+      <p>
+        Keep the button’s target comfortably larger than the graphic. A 24px icon does not by itself
+        make a 24px or 44px interactive target. Do not rely only on a <code>title</code> tooltip for the
+        accessible name.
+      </p>
+      <h3 id="standalone-svg">Using standalone SVGs</h3>
+      <p>
+        Copy an icon’s SVG markup inline when it should inherit
+        <code>currentColor</code>. If you use an SVG file in an
+        <code>&lt;img&gt;</code>, provide appropriate <code>alt</code> text, or
+        <code>alt=""</code> for decoration. An external image does not inherit its parent’s CSS color,
+        so check its stroke color in both themes.
+      </p>
+    </div>
+    <CodeBlock
+      id="icon-size"
+      label="An application-specific icon size"
+      language="css"
+      code={`.project-icon {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+}`}
+    />
+    <div class="lf-prose docs-prose">
+      <p>
+        Keep icons proportional and use text whenever a symbol alone could be ambiguous. See <a
+          href={url("docs/accessibility/")}>accessibility</a
+        > for non-text contrast and target-size guidance.
+      </p>
+    </div>
+  </section>
+</DocsLayout>

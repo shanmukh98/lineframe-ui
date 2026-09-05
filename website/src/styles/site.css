@@ -1,0 +1,161 @@
+.site-body {
+  --site-gutter: clamp(1rem, 3vw, 2.5rem);
+  --lf-font-sans: "Geist Variable", "Geist", system-ui, sans-serif;
+  --lf-font-mono: "Geist Mono Variable", "Geist Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+.site-body [hidden] {
+  display: none !important;
+}
+
+.site-body :where(h1, h2, h3, p, a, li, label, summary) {
+  overflow-wrap: anywhere;
+}
+
+.site-body :where(main, section, article, aside, nav, div) {
+  min-inline-size: 0;
+}
+
+.site-header-inner {
+  gap: 1rem;
+}
+
+.site-header-actions {
+  gap: 1rem;
+}
+
+.site-primary-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.site-primary-nav a {
+  display: inline-flex;
+  min-block-size: 2.75rem;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--lf-muted);
+  font-size: 0.84rem;
+  text-decoration: none;
+  text-underline-offset: 0.3em;
+}
+
+.site-primary-nav a:hover,
+.site-primary-nav a[aria-current] {
+  color: var(--lf-text);
+  text-decoration: underline;
+  text-decoration-color: var(--lf-accent);
+}
+
+.site-repo-link .lf-icon {
+  inline-size: 0.95rem;
+}
+
+.site-header-divider {
+  block-size: 1.25rem;
+  border-inline-start: 1px solid var(--lf-border);
+}
+
+.site-theme-toggle {
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+}
+
+.site-footer-inner {
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  padding-block: 1.5rem;
+  font-size: 0.75rem;
+}
+
+.site-footer-inner p {
+  margin: 0;
+  color: var(--lf-text);
+}
+
+.site-footer-inner p span {
+  display: block;
+  margin-block-start: 0.25rem;
+  color: var(--lf-muted);
+}
+
+.site-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+}
+
+.site-footer-links a {
+  display: inline-flex;
+  min-block-size: 2.75rem;
+  align-items: center;
+}
+
+.site-footer-links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.site-text-button {
+  min-block-size: 2.75rem;
+  padding: 0.25rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--lf-muted);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  cursor: pointer;
+}
+
+.site-text-button:hover {
+  color: var(--lf-text);
+}
+
+.site-not-found {
+  display: grid;
+  min-block-size: 65vh;
+  align-content: center;
+  gap: 1.5rem;
+  max-inline-size: 48rem;
+  margin-inline: auto;
+  padding: 5rem var(--site-gutter);
+}
+
+.site-not-found h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 550;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+}
+
+.site-not-found p {
+  max-inline-size: 55ch;
+  margin: 0;
+  color: var(--lf-muted);
+}
+
+@media (max-width: 42rem) {
+  .site-primary-nav {
+    gap: 0.75rem;
+  }
+
+  .site-primary-nav .site-nav-wide,
+  .site-header-divider {
+    display: none;
+  }
+
+  .site-header-actions {
+    gap: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-body *,
+  .site-body *::before,
+  .site-body *::after {
+    scroll-behavior: auto !important;
+  }
+}

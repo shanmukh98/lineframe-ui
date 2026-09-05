@@ -1,21 +1,21 @@
-/* Define each palette once; pages select it with data-lineframe-accent. */
-:root,
-[data-lineframe-accent="slate"] {
-  --lf-accent-light: #4f6b7a;
-  --lf-accent-dark: #86a1ad;
-}
-
-[data-lineframe-accent="violet"] {
-  --lf-accent-light: #5d6985;
-  --lf-accent-dark: #a1adcc;
-}
-
-[data-lineframe-accent="moss"] {
-  --lf-accent-light: #606e59;
-  --lf-accent-dark: #a0b593;
-}
-
-[data-lineframe-accent="clay"] {
-  --lf-accent-light: #7b645c;
-  --lf-accent-dark: #c7a394;
+/* Lineframe UI v0.7.0 | MIT | Generated from src/; do not edit. */
+/* src/styles/tokens/accents.css */
+@layer lineframe.tokens {
+  :root,
+  [data-lineframe-accent=slate] {
+    --lf-accent-light: #4f6b7a;
+    --lf-accent-dark: #86a1ad;
+  }
+  [data-lineframe-accent=violet] {
+    --lf-accent-light: #5d6985;
+    --lf-accent-dark: #a1adcc;
+  }
+  [data-lineframe-accent=moss] {
+    --lf-accent-light: #606e59;
+    --lf-accent-dark: #a0b593;
+  }
+  [data-lineframe-accent=clay] {
+    --lf-accent-light: #7b645c;
+    --lf-accent-dark: #c7a394;
+  }
 }

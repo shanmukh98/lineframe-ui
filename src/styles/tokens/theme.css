@@ -1,0 +1,38 @@
+@layer lineframe.tokens {
+  :root {
+    color-scheme: light dark;
+    --lf-bg: light-dark(#f4f3ee, #000000);
+    --lf-panel: light-dark(#faf9f5, #050505);
+    --lf-panel-raised: light-dark(#ffffff, #0a0a0a);
+    --lf-text: light-dark(#191a17, #f4f4ef);
+    --lf-muted: light-dark(#666860, #b0b0a8);
+    --lf-faint: light-dark(#686a62, #797a73);
+    --lf-border: light-dark(#deded6, #22231f);
+    --lf-border-strong: light-dark(#c7c8c0, #3a3c35);
+    --lf-control-border: light-dark(#81847a, #73766c);
+    --lf-code: light-dark(#ecebe5, #090a08);
+    --lf-info: light-dark(#395f86, #a4c6ef);
+    --lf-success: light-dark(#316343, #a0cfad);
+    --lf-warning: light-dark(#785513, #d9b777);
+    --lf-danger: light-dark(#9b3b35, #efaca6);
+    --lf-shadow: 0 18px 60px light-dark(rgb(32 34 29 / 6%), rgb(0 0 0 / 28%));
+  }
+
+  [data-theme="light"] {
+    color-scheme: light;
+  }
+
+  [data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  :root,
+  .lf-site,
+  [data-lineframe-accent] {
+    --lf-accent: light-dark(var(--lf-accent-light), var(--lf-accent-dark));
+    --lf-accent-soft: color-mix(in srgb, var(--lf-accent) 12%, transparent);
+    --lf-accent-medium: color-mix(in srgb, var(--lf-accent) 34%, transparent);
+    --lf-action-bg: light-dark(var(--lf-text), var(--lf-accent));
+    --lf-on-action: light-dark(#ffffff, #000000);
+  }
+}

@@ -1,0 +1,28 @@
+---
+import ThemeControl from "./ThemeControl.astro";
+import Icon from "./Icon.astro";
+import { site } from "../lib/site";
+import { url } from "../lib/urls";
+
+const isDocs = Astro.url.pathname.startsWith(url("docs/"));
+---
+
+<header class="lf-header site-header">
+  <div class="lf-header__inner site-header-inner">
+    <a class="lf-brand" href={url()} aria-label="Lineframe UI home">
+      <span class="lf-brand__mark" aria-hidden="true"></span>
+      <span>Lineframe UI</span>
+    </a>
+    <div class="lf-header__actions site-header-actions">
+      <nav class="site-primary-nav" aria-label="Primary">
+        <a href={url("docs/")} aria-current={isDocs ? "location" : undefined}>Docs</a>
+        <a class="site-nav-wide" href={url("docs/philosophy/")}>Philosophy</a>
+        <a class="site-nav-wide site-repo-link" href={site.repository}>
+          GitHub <Icon name="external-link" />
+        </a>
+      </nav>
+      <span class="site-header-divider" aria-hidden="true"></span>
+      <ThemeControl />
+    </div>
+  </div>
+</header>

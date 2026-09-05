@@ -1,0 +1,56 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import ComponentGrid from "../../../components/ComponentGrid.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import { url } from "../../../lib/urls";
+---
+
+<DocsLayout
+  title="Components"
+  description="Small, composable pieces with native behavior. Copy a complete example, understand its semantics, then adapt it to your project."
+  section="Build with Lineframe"
+  source="website/src/pages/docs/components/index.astro"
+>
+  <div class="lf-prose docs-prose">
+    <p>
+      Components are CSS classes, not framework-specific wrappers. Start with the element that fits
+      the task and add a base class. Modifiers such as
+      <code>lf-button--solid</code> layer on top of that base.
+    </p>
+  </div>
+  <CodeBlock
+    id="component-composition"
+    code={`<a class="lf-button lf-button--solid" href="${url("docs/installation/")}">
+  Read the installation guide
+</a>`}
+    label="Base class + modifier + native element"
+  />
+  <ComponentGrid />
+  <div class="lf-prose docs-prose">
+    <h2 id="how-to-use-examples">How these examples work</h2>
+    <p>
+      Most previews and their displayed code come from the same local HTML string. The preview’s
+      outer frame, copy control, and spacing belong to this website—not the component you copy.
+    </p>
+    <p>
+      Demo forms use a small, documentation-only handler for validation feedback. Those <code
+        >data-demo-*</code
+      > attributes are not library APIs. Your application must supply its own submission and validation
+      logic.
+    </p>
+    <h2 id="what-needs-javascript">What needs JavaScript?</h2>
+    <p>
+      Layout, buttons, fields, alerts, badges, tables, disclosures, and pagination do not need
+      library JavaScript. Theme preference and a generated article table of contents are the two
+      optional
+      <a href={url("docs/javascript/")}>JavaScript behaviors</a>.
+    </p>
+    <h2 id="keep-the-semantics">Keep the semantics when you customize</h2>
+    <p>
+      A style does not provide a role, a name, or behavior by itself.
+      <code>aria-disabled</code> does not disable a link, a red border does not explain an error, and
+      an alert class does not imply that a screen reader should interrupt. Each focused guide covers the
+      responsibilities for that component.
+    </p>
+  </div>
+</DocsLayout>

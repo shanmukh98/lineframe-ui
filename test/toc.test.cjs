@@ -1,103 +1,58 @@
 const assert = require("node:assert/strict");
-const { readFileSync } = require("node:fs");
-const path = require("node:path");
 const test = require("node:test");
-const vm = require("node:vm");
 
-const source = readFileSync(path.join(__dirname, "../lineframe-toc.js"), "utf8");
+const activeModule = import("../dist/behaviors/toc/active-section.js");
+const headingsModule = import("../dist/behaviors/toc/headings.js");
 
-function createPage({ height = 2500, viewport = 1000, positions = [300, 1200, 1800] } = {}) {
-  const listeners = new Map();
-  const window = {
-    scrollY: 0,
-    innerHeight: viewport,
-    location: { hash: "" },
-    matchMedia: () => ({ matches: false, addEventListener() {} }),
-    requestAnimationFrame: (callback) => callback(),
-    addEventListener: (type, callback) => listeners.set(type, callback)
-  };
-  const createElement = () => ({
-    dataset: {},
-    children: [],
-    attributes: {},
-    append(child) { this.children.push(child); },
-    setAttribute(name, value) { this.attributes[name] = value; },
-    removeAttribute(name) { delete this.attributes[name]; },
-    addEventListener() {}
-  });
-  const headings = positions.map((top, index) => ({
-    id: `section-${index + 1}`,
-    tagName: "H2",
-    textContent: `Section ${index + 1}`,
-    getBoundingClientRect: () => ({ top: top - window.scrollY })
-  }));
-  const list = createElement();
-  const prose = { querySelectorAll: () => headings };
-  const article = { querySelector: () => prose };
-  const toc = {
-    dataset: {},
-    hidden: true,
-    closest: () => article,
-    querySelector: (selector) => selector === "[data-lineframe-toc-list]" ? list : null
-  };
-  const document = {
-    readyState: "complete",
-    documentElement: { scrollHeight: height },
-    createElement,
-    getElementById: (id) => headings.find((heading) => heading.id === id),
-    querySelector: () => ({ getBoundingClientRect: () => ({ height: 68 }) }),
-    querySelectorAll: () => [toc]
-  };
-
-  vm.runInNewContext(source, { window, document });
-
-  return {
-    scrollTo(y) {
-      window.scrollY = y;
-      listeners.get("scroll")();
-    },
-    activeSection() {
-      return list.children
-        .flatMap((item) => item.children)
-        .find((link) => link.attributes["aria-current"] === "location")?.textContent;
-    }
-  };
+async function active(scrollY, positions = [300, 1200, 1800], height = 2500, viewport = 1000) {
+  const { activeSectionIndex } = await activeModule;
+  return activeSectionIndex(
+    positions.map((top) => top - scrollY),
+    124,
+    scrollY,
+    viewport,
+    height,
+  );
 }
 
-test("tracks headings below the sticky header", () => {
-  const page = createPage();
-  assert.equal(page.activeSection(), "Section 1");
-  page.scrollTo(1100);
-  assert.equal(page.activeSection(), "Section 2");
+test("tracks headings below the sticky header", async () => {
+  assert.equal(await active(0), 0);
+  assert.equal(await active(1100), 1);
 });
 
-test("activates the last section at the bottom even when its heading is lower", () => {
-  const page = createPage();
-  page.scrollTo(1500);
-  assert.equal(page.activeSection(), "Section 3");
+test("activates a short final section at the bottom", async () => {
+  assert.equal(await active(1500), 2);
+  assert.equal(await active(1499.5), 2);
 });
 
-test("allows fractional scroll positions at the bottom", () => {
-  const page = createPage();
-  page.scrollTo(1499.5);
-  assert.equal(page.activeSection(), "Section 3");
+test("does not activate the last section merely because it is visible", async () => {
+  assert.equal(await active(1495), 1);
 });
 
-test("does not activate the final section just because it is visible", () => {
-  const page = createPage();
-  page.scrollTo(1495);
-  assert.equal(page.activeSection(), "Section 2");
+test("resumes normal heading tracking when scrolling back up", async () => {
+  assert.equal(await active(1500), 2);
+  assert.equal(await active(1100), 1);
 });
 
-test("resumes normal heading tracking when scrolling back up", () => {
-  const page = createPage();
-  page.scrollTo(1500);
-  assert.equal(page.activeSection(), "Section 3");
-  page.scrollTo(1100);
-  assert.equal(page.activeSection(), "Section 2");
+test("does not jump to the last heading on an unscrolled short page", async () => {
+  assert.equal(await active(0, [300, 500, 700], 1000), 0);
 });
 
-test("does not jump to the last heading on an unscrolled short page", () => {
-  const page = createPage({ height: 1000, positions: [300, 500, 700] });
-  assert.equal(page.activeSection(), "Section 1");
+test("an empty heading list has no active item", async () => {
+  assert.equal(await active(0, []), -1);
+});
+
+test("slugs retain international letters and normalize accents", async () => {
+  const { slugify } = await headingsModule;
+  assert.equal(slugify("  Reading & writing  "), "reading-writing");
+  assert.equal(slugify("D\u00e9j\u00e0 vu"), "deja-vu");
+  assert.equal(slugify("\u65e5\u672c\u8a9e"), "\u65e5\u672c\u8a9e");
+});
+
+test("malformed fragments are reported rather than crashing navigation", async (t) => {
+  const { decodeFragment } = await headingsModule;
+  const warning = t.mock.method(console, "warn", () => {});
+  assert.equal(decodeFragment("#hello%20world"), "hello world");
+  assert.equal(decodeFragment("#%E0%A4%A"), null);
+  assert.equal(warning.mock.callCount(), 1);
 });

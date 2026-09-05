@@ -1,0 +1,109 @@
+@layer lineframe.layout {
+  .lf-article {
+    width: min(100%, var(--lf-frame-width));
+    margin-inline: auto;
+    border-inline: 1px solid var(--lf-border);
+  }
+
+  .lf-article__layout {
+    display: grid;
+    grid-template-columns: var(--lf-article-rail-width) minmax(0, 1fr);
+  }
+
+  .lf-article__layout:not([data-lineframe-toc-ready]) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lf-article__layout:not([data-lineframe-toc-ready]) > .lf-article__rail {
+    display: none;
+  }
+
+  .lf-article__layout:not([data-lineframe-toc-ready]) > .lf-article__body {
+    grid-column: 1;
+    border-inline-start: 0;
+  }
+
+  .lf-article__header {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 4vw, 3.5rem);
+    border-bottom: 1px solid var(--lf-border);
+  }
+
+  .lf-article__heading {
+    width: min(100%, 58rem);
+    margin-inline: auto;
+  }
+
+  .lf-article__heading > .lf-back-link {
+    display: flex;
+    width: max-content;
+    margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+  }
+
+  .lf-article__rail {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+    padding: clamp(2rem, 4vw, 3.5rem) 1rem 3rem clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .lf-article__title {
+    max-width: 22ch;
+    margin: 0;
+    font-size: clamp(2.25rem, 5vw, 4.1rem);
+    font-weight: 520;
+    letter-spacing: -0.055em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  .lf-article__description {
+    max-width: 43rem;
+    margin: 1.35rem 0 0;
+    color: var(--lf-muted);
+    font-size: 1.05rem;
+  }
+
+  .lf-article__body {
+    grid-column: 2;
+    grid-row: 2;
+    padding: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 4vw, 3.5rem);
+    border-left: 1px solid var(--lf-border);
+  }
+
+  @media (max-width: 52rem) {
+    .lf-article__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .lf-article__header {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+
+    .lf-article__rail {
+      grid-column: 1;
+      grid-row: 2;
+      padding: 2rem clamp(1.5rem, 4vw, 3.5rem) 0;
+    }
+
+    .lf-article__body {
+      grid-column: 1;
+      grid-row: 3;
+      border-left: 0;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .lf-article {
+      border-inline: 0;
+    }
+
+    .lf-article__header,
+    .lf-article__rail,
+    .lf-article__body {
+      padding-inline: 1.25rem;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import { Content } from "../../content/contributing.md";
+import Icon from "../../components/Icon.astro";
+import { site } from "../../lib/site";
+import { sourceUrl } from "../../lib/urls";
+---
+
+<DocsLayout
+  title="Contributing"
+  description="Help make the small things dependable. A focused fix, a clearer guide, or an honest bug report can improve the library for everyone."
+  section="Make it yours"
+  source="website/src/content/contributing.md"
+>
+  <div class="lf-cluster">
+    <a class="lf-button lf-button--solid" href={sourceUrl("CONTRIBUTING.md")}>
+      Root contributor guide <Icon name="external-link" />
+    </a>
+    <a class="lf-button" href={`${site.repository}/issues/new/choose`}>Open an issue</a>
+  </div>
+  <div class="lf-prose docs-prose docs-section">
+    <Content />
+  </div>
+</DocsLayout>

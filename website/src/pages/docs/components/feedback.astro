@@ -1,0 +1,97 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import Demo from "../../../components/Demo.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import { alerts, badges, tags } from "../../../examples/feedback";
+import { url } from "../../../lib/urls";
+---
+
+<DocsLayout
+  title="Feedback"
+  description="Give status a clear name and a useful next step. Color supports the message; it never carries the whole meaning."
+  section="Components"
+  accent="clay"
+  source="website/src/pages/docs/components/feedback.astro"
+>
+  <div class="lf-prose docs-prose">
+    <h2 id="alerts">Contextual messages</h2>
+    <p>
+      Use <code>lf-alert</code> for a message that needs more room than a badge. Add <code
+        >--info</code
+      >, <code>--success</code>, <code>--warning</code>, or
+      <code>--danger</code>, and give the message a concise
+      <code>lf-alert__title</code>.
+    </p>
+    <p>
+      These are static examples of message content, not reports about a real operation. They
+      intentionally do not have <code>role="alert"</code>.
+    </p>
+  </div>
+  <Demo id="feedback-alerts" title="Four semantic variants" code={alerts} />
+  <div class="lf-prose docs-prose">
+    <p>
+      Write what happened, what it means, and what the person can do next. “The file could not be
+      opened” is more useful than “Error 104.” Use a visible word or recognizable icon alongside
+      color.
+    </p>
+  </div>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="badges">Compact status labels</h2>
+      <p>
+        <code>lf-badge</code> works in lists, tables, and small metadata groups. The default is neutral;
+        the semantic modifiers match the alert variants. Badges are text, not interactive controls.
+      </p>
+    </div>
+    <Demo id="feedback-badges" title="Neutral and semantic badges" code={badges} />
+    <div class="lf-prose docs-prose">
+      <h3 id="tags">Use tags for categories</h3>
+      <p>
+        The existing <code>lf-tag</code> component provides an accent-tinted category label. Reserve semantic
+        statuses for actual states; a topic such as “CSS” is not a success or warning.
+      </p>
+    </div>
+    <Demo id="feedback-tags" title="Simple category labels" code={tags} />
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="live-regions">Announce changes only when they need announcing</h2>
+      <p>
+        A CSS class has no live-region behavior. For a nonurgent result that appears after an
+        action, keep an empty <code>role="status"</code> region in the document and update its text after
+        the real operation completes. The copy controls on this site use that pattern.
+      </p>
+    </div>
+    <CodeBlock
+      id="feedback-live-region"
+      label="A nonurgent result region"
+      code={`<p class="lf-hint" id="copy-result" role="status"></p>
+<!-- Update this existing region after a successful copy operation. -->`}
+    />
+    <div class="lf-prose docs-prose">
+      <p>
+        Use <code>role="alert"</code> sparingly for an urgent dynamic message that must interrupt the
+        current task. Do not mark an entire page, a static warning, or every field error as assertive.
+        Do not move keyboard focus to a routine status message.
+      </p>
+      <p>
+        A <code>role="status"</code> region already implies polite announcements. Avoid duplicating live-region
+        semantics or announcing the same result in multiple places.
+      </p>
+      <h3 id="feedback-checklist">Before shipping</h3>
+      <ul>
+        <li>Keep the meaning understandable without color.</li>
+        <li>Do not claim success before the underlying operation has succeeded.</li>
+        <li>Make recovery instructions specific and actionable.</li>
+        <li>Check text and essential indicators against every customized background.</li>
+      </ul>
+      <p>
+        For field-level problems, use the <a href={url("docs/components/forms/#errors")}
+          >form error pattern</a
+        >.
+      </p>
+    </div>
+  </section>
+</DocsLayout>

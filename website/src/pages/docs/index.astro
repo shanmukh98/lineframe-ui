@@ -1,0 +1,90 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import ComponentGrid from "../../components/ComponentGrid.astro";
+import Icon from "../../components/Icon.astro";
+import { url } from "../../lib/urls";
+---
+
+<DocsLayout
+  title="Introduction"
+  description="A small foundation for content-first interfaces. Start with semantic HTML, add a few classes, and keep control of the result."
+  section="Start here"
+  source="website/src/pages/docs/index.astro"
+>
+  <div class="lf-prose docs-prose">
+    <p>
+      Lineframe UI is a framework-agnostic CSS library with optional JavaScript for theme preference
+      and article navigation. It gives you readable typography, warm paper and true-black themes,
+      quiet frames, and a reusable set of native components.
+    </p>
+    <p>
+      It is not a page builder, an application framework, or a personal-blog theme. Use it for a
+      product guide, a project website, a knowledge base, or a small interface that needs clear
+      structure.
+    </p>
+  </div>
+  <div class="lf-cluster">
+    <a class="lf-button lf-button--solid" href={url("docs/installation/")}>
+      Install Lineframe <Icon name="arrow-right" />
+    </a>
+    <a class="lf-button" href={url("docs/philosophy/")}>Read the philosophy</a>
+  </div>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="a-simple-mental-model">A simple mental model</h2>
+    </div>
+    <ol class="docs-steps">
+      <li>
+        <strong>Choose the right HTML.</strong>
+        <p class="docs-inline-note">
+          A link navigates. A button acts. A label names its field. Keep the native behavior.
+        </p>
+      </li>
+      <li>
+        <strong>Add only the classes you need.</strong>
+        <p class="docs-inline-note">
+          Most styles are opt-in, with <code>lf-</code> names and shared design tokens. Use <code
+            >lf-site</code
+          > for the page foundation.
+        </p>
+      </li>
+      <li>
+        <strong>Enhance deliberately.</strong>
+        <p class="docs-inline-note">
+          CSS already handles layout, forms, and feedback. Theme persistence and generated article
+          navigation are optional, explicit JavaScript behaviors.
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="docs-section" aria-label="Component guides">
+    <div class="lf-prose docs-prose">
+      <h2 id="what-is-included">What is included</h2>
+      <p>Each guide pairs live examples with the markup that renders them.</p>
+    </div>
+    <ComponentGrid />
+  </section>
+
+  <div class="lf-prose docs-prose">
+    <h2 id="what-you-own">What you still own</h2>
+    <p>
+      Your content, routing, business logic, validation, and application state remain yours. So do
+      meaningful alt text, sensible heading levels, testing custom colors, and checking the
+      completed experience with a keyboard. Start with the <a href={url("docs/accessibility/")}
+        >accessibility checklist</a
+      >.
+    </p>
+    <h2 id="no-framework-required">No framework required</h2>
+    <p>
+      The browser assets have no runtime dependencies. You can use them in plain HTML, a
+      server-rendered site, or a component framework. The typed module API supports explicit setup
+      and cleanup; importing it does not attach browser listeners.
+    </p>
+    <p>
+      This documentation uses Astro, local fonts, and a little website-only JavaScript. None of
+      those are required by your site.
+    </p>
+  </div>
+</DocsLayout>

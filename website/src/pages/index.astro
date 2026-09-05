@@ -1,0 +1,199 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import CodeBlock from "../components/CodeBlock.astro";
+import { site, componentGroups } from "../lib/site";
+import { palettes } from "../lib/palettes";
+import { url } from "../lib/urls";
+import { cdnHead } from "../examples/installation";
+import "../styles/home.css";
+---
+
+<BaseLayout title="Lineframe UI">
+  <main class="home-frame" id="main-content" tabindex="-1">
+    <section class="home-hero" aria-labelledby="home-heading">
+      <div>
+        <div class="home-eyebrow">
+          <span class="lf-tag">v{site.version}</span>
+          <span>A content-first UI library</span>
+        </div>
+        <h1 class="home-heading" id="home-heading">
+          A quiet frame.<span>For what matters.</span>
+        </h1>
+        <p class="home-description">
+          Readable type, considered spacing, and components that get out of the way. A small CSS
+          foundation for your next website—not someone else’s template.
+        </p>
+        <div class="lf-cluster home-actions">
+          <a class="lf-button lf-button--solid" href={url("docs/installation/")}>
+            Get started <Icon name="arrow-right" />
+          </a>
+          <a class="lf-button" href={url("docs/components/")}>Explore components</a>
+        </div>
+        <p class="home-footnote">Framework agnostic · No runtime dependencies · MIT</p>
+      </div>
+
+      <section
+        class="home-preview"
+        data-palette-preview
+        data-lineframe-accent="slate"
+        aria-labelledby="preview-title"
+      >
+        <div class="home-preview-toolbar">
+          <span>Interface / 001</span>
+          <span class="home-preview-indicator">Live components</span>
+        </div>
+        <div class="home-preview-content">
+          <p class="lf-kicker">A small working canvas</p>
+          <h2 class="home-preview-heading" id="preview-title">Your next good idea.</h2>
+          <p class="home-preview-description">
+            Native elements. A little structure. Plenty of room to make it your own.
+          </p>
+          <div class="lf-field">
+            <label class="lf-label" for="preview-project">Project name</label>
+            <input
+              class="lf-input"
+              id="preview-project"
+              value="Open atlas"
+              aria-describedby="preview-hint"
+              maxlength="60"
+            />
+            <p class="lf-hint" id="preview-hint">Try editing this field. It stays on this page.</p>
+          </div>
+          <label class="lf-choice">
+            <input class="lf-checkbox" type="checkbox" checked />
+            Include documentation
+          </label>
+          <hr class="home-preview-rule" />
+          <div class="lf-cluster">
+            <span class="lf-badge lf-badge--success"><Icon name="check" /> Native HTML</span>
+            <span class="lf-badge">CSS first</span>
+          </div>
+          <div class="home-preview-meta">
+            <a class="lf-button lf-button--solid" href={url("docs/components/forms/")}>
+              Explore form patterns <Icon name="arrow-right" />
+            </a>
+          </div>
+        </div>
+        <div class="home-preview-footer" data-preview-controls hidden>
+          <fieldset class="home-palette-picker">
+            <legend>Try a palette</legend>
+            <div class="home-palette-options">
+              {
+                palettes.map((palette) => (
+                  <label class="home-palette-option" data-lineframe-accent={palette.name}>
+                    <input
+                      type="radio"
+                      name="preview-accent"
+                      value={palette.name}
+                      checked={palette.name === "slate"}
+                    />
+                    <span class="home-palette-swatch" aria-hidden="true" />
+                    <span class="lf-visually-hidden">{palette.name}</span>
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+          <output class="home-palette-status" data-palette-status
+            >slate palette · preview only</output
+          >
+        </div>
+      </section>
+    </section>
+
+    <div class="home-principles">
+      <section class="home-principle" aria-labelledby="principle-content">
+        <span class="home-principle-number" aria-hidden="true">01 /</span>
+        <h2 id="principle-content">Content comes first.</h2>
+        <p>
+          A clear hierarchy, comfortable reading widths, and quiet framing. The interface supports
+          the work instead of competing with it.
+        </p>
+      </section>
+      <section class="home-principle" aria-labelledby="principle-native">
+        <span class="home-principle-number" aria-hidden="true">02 /</span>
+        <h2 id="principle-native">Keep the good defaults.</h2>
+        <p>
+          Real buttons, labeled inputs, and native disclosures. Add JavaScript for theme preference
+          and article navigation, only when you need it.
+        </p>
+      </section>
+      <section class="home-principle" aria-labelledby="principle-open">
+        <span class="home-principle-number" aria-hidden="true">03 /</span>
+        <h2 id="principle-open">Make it your own.</h2>
+        <p>
+          Four paired palettes, composable classes, and modular source. Use your framework, your
+          typefaces, and your own point of view.
+        </p>
+      </section>
+    </div>
+
+    <section class="home-section" aria-labelledby="start-heading">
+      <div>
+        <p class="lf-kicker">A small beginning</p>
+        <h2 class="home-section-heading" id="start-heading">Start with two files.</h2>
+        <p class="home-section-intro">
+          Add the version-pinned assets to your document head and
+          <code>lf-site</code> to your body. No build step required for a plain HTML page.
+        </p>
+        <a class="lf-back-link" href={url("docs/installation/")}>
+          Full installation guide <Icon name="arrow-right" />
+        </a>
+      </div>
+      <div>
+        <CodeBlock id="home-install" code={cdnHead} label="Your document head" />
+        <div class="lf-prose">
+          <p>
+            CSS handles the components. The optional script remembers your theme and builds an
+            article table of contents. Prefer your own hosting or a module-based app? <a
+              href={url("docs/installation/#self-hosting")}>There are paths for both.</a
+            >
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="components-heading">
+      <div>
+        <p class="lf-kicker">A useful set, not everything</p>
+        <h2 class="home-section-heading" id="components-heading">The pieces you reach for.</h2>
+        <p class="home-section-intro">
+          From the outer frame to a field’s error message. Each component has a focused example,
+          copyable markup, and guidance on how to use it well.
+        </p>
+        <a class="lf-back-link" href={url("docs/icons/")}>
+          Plus twelve original icons <Icon name="arrow-right" />
+        </a>
+      </div>
+      <ul class="home-component-list">
+        {
+          componentGroups.map((group) => (
+            <li>
+              <a href={url(group.path)}>
+                <div>
+                  <strong>{group.title}</strong>
+                  <p>{group.description}</p>
+                </div>
+                <Icon name="arrow-right" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="home-closing" aria-labelledby="contribute-heading">
+      <div>
+        <h2 id="contribute-heading">Small enough to understand. Open to contribution.</h2>
+        <p>
+          Bring a useful pattern, a clearer example, or a carefully reproduced bug. Thoughtful
+          contributions make the foundation better for everyone.
+        </p>
+      </div>
+      <a class="lf-button" href={url("docs/contributing/")}>
+        Contributor guide <Icon name="arrow-right" />
+      </a>
+    </section>
+  </main>
+</BaseLayout>

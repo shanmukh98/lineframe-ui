@@ -1,0 +1,42 @@
+@layer lineframe.components {
+  .lf-table-wrap {
+    max-inline-size: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--lf-border);
+    border-radius: var(--lf-radius-md);
+  }
+
+  .lf-table {
+    display: table;
+    inline-size: 100%;
+    margin: 0;
+    border-collapse: collapse;
+    text-align: start;
+    font-size: 0.9rem;
+  }
+
+  .lf-table caption {
+    padding: var(--lf-space-3) var(--lf-space-4);
+    color: var(--lf-muted);
+    text-align: start;
+    caption-side: top;
+  }
+
+  .lf-table th,
+  .lf-table td {
+    padding: var(--lf-space-3) var(--lf-space-4);
+    border: 0;
+    border-block-end: 1px solid var(--lf-border);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .lf-table thead th {
+    background: var(--lf-panel);
+    font-weight: 600;
+  }
+
+  .lf-table tbody tr:last-child > * {
+    border-block-end: 0;
+  }
+}

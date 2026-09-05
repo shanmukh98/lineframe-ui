@@ -1,0 +1,115 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import Demo from "../../../components/Demo.astro";
+import { projectForm, formChoices, formError, formStates } from "../../../examples/forms";
+import { url } from "../../../lib/urls";
+---
+
+<DocsLayout
+  title="Forms"
+  description="Native fields with visible labels, helpful descriptions, and error messages that tell people what to do next."
+  section="Components"
+  accent="moss"
+  source="website/src/pages/docs/components/forms.astro"
+>
+  <div class="lf-prose docs-prose">
+    <h2 id="a-complete-form">Start with a complete field</h2>
+    <p>
+      <code>lf-field</code> groups a label, a control, and its supporting text. Match the label’s <code
+        >for</code
+      > with a unique field <code>id</code>. Associate hints and errors using <code
+        >aria-describedby</code
+      >. A placeholder is not a replacement for a label.
+    </p>
+    <p>
+      This is a local demonstration, not a sign-up form. Use sample values. With JavaScript,
+      submission validates the fields and shows a result without sending data. Without JavaScript,
+      the native GET form reloads this page with sample values in the URL.
+    </p>
+  </div>
+  <Demo id="project-form" title="Text, select, textarea, and checkbox" code={projectForm} />
+  <div class="lf-prose docs-prose">
+    <p>
+      <code>data-demo-form</code> and <code>data-demo-status</code> belong to this documentation. Remove
+      them when copying the markup and provide your own form action or submission handler. The library
+      does not submit, store, or validate application data.
+    </p>
+    <p>
+      Use input types and autocomplete tokens that fit real fields—such as
+      <code>type="email"</code> and <code>autocomplete="email"</code> for a contact address. This generic
+      project-name demo turns autocomplete off; that is not a recommendation for personal-information
+      fields.
+    </p>
+  </div>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="choices">Checkboxes and radio groups</h2>
+      <p>
+        Wrap the input and text in <code>lf-choice</code> to make the whole label usable. Give related
+        radios the same <code>name</code> and group them with a <code>fieldset</code> and descriptive
+        <code>legend</code>. The browser supplies radio-group arrow-key behavior.
+      </p>
+    </div>
+    <Demo id="form-choices" title="A native radio group" code={formChoices} />
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="errors">Make errors understandable</h2>
+      <p>
+        Pair <code>aria-invalid="true"</code> with specific error text and a description relationship.
+        This example starts with an invalid sample value. Type <code>reader@example.com</code> to see
+        the error clear.
+      </p>
+    </div>
+    <Demo id="validation-example" title="An error that can be corrected" code={formError} />
+    <noscript>
+      <p class="docs-inline-note">
+        Without JavaScript, this error preview is a static example. Native email validation still
+        works when you submit.
+      </p>
+    </noscript>
+    <div class="lf-prose docs-prose">
+      <p>
+        The demo handler updates <code>aria-invalid</code>, hides or reveals the error, and keeps <code
+          >aria-describedby</code
+        > in sync. In your application, choose a considerate validation timing and do not announce an
+        assertive error on every keystroke.
+      </p>
+      <p>
+        Native browser validation is useful, but it does not replace server-side validation.
+        Preserve entered values after errors and help people find the affected fields. For longer
+        forms, consider a linked error summary.
+      </p>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="read-only-and-disabled">Read-only is not disabled</h2>
+      <p>
+        A read-only text field remains focusable and selectable, and a named read-only field is
+        submitted with the form. A disabled control is not focusable or submitted. Choose based on
+        behavior, not only appearance.
+      </p>
+    </div>
+    <Demo id="form-states" title="Two different native states" code={formStates} />
+  </section>
+
+  <div class="lf-prose docs-prose">
+    <h2 id="field-checklist">Before shipping</h2>
+    <ul>
+      <li>Use unique IDs when an example appears more than once.</li>
+      <li>Mark required fields in visible text as well as with <code>required</code>.</li>
+      <li>Keep a logical tab order; do not use positive <code>tabindex</code> values.</li>
+      <li>Test labels, instructions, validation, and result messages with assistive technology.</li>
+      <li>Never rely on color alone to explain an error or a required field.</li>
+    </ul>
+    <p>
+      See <a href={url("docs/components/feedback/")}>feedback</a> for status messages and the <a
+        href={url("docs/accessibility/")}>accessibility checklist</a
+      > for consumer responsibilities.
+    </p>
+  </div>
+</DocsLayout>

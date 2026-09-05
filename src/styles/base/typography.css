@@ -1,0 +1,68 @@
+@layer lineframe.base {
+  .lf-hero__label,
+  .lf-section__label,
+  .lf-kicker,
+  .lf-meta,
+  .lf-strip {
+    font-family: var(--lf-font-mono);
+  }
+
+  .lf-hero__label,
+  .lf-section__label {
+    color: var(--lf-faint);
+    font-size: 0.72rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .lf-hero__label::before,
+  .lf-section__label::before {
+    display: inline-block;
+    width: 1.35rem;
+    height: 1px;
+    margin-right: 0.65rem;
+    content: "";
+    vertical-align: middle;
+    background: var(--lf-accent);
+  }
+
+  .lf-display {
+    max-width: 15ch;
+    margin: 0;
+    font-size: clamp(2.55rem, 7vw, 5.8rem);
+    font-weight: 500;
+    letter-spacing: -0.065em;
+    line-height: 0.98;
+  }
+
+  .lf-lead {
+    max-width: 49rem;
+    margin: 1.75rem 0 0;
+    color: var(--lf-muted);
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    line-height: 1.65;
+  }
+
+  .lf-kicker {
+    margin: 0 0 1rem;
+    color: var(--lf-accent);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .lf-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-top: 1.6rem;
+    color: var(--lf-faint);
+    font-size: 0.72rem;
+  }
+
+  @media (max-width: 40rem) {
+    .lf-display {
+      font-size: clamp(2.1rem, 10vw, 3rem);
+    }
+  }
+}

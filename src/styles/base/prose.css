@@ -1,0 +1,145 @@
+@layer lineframe.base {
+  .lf-prose {
+    width: min(100%, var(--lf-reading-width));
+    margin-inline: auto;
+  }
+
+  .lf-prose > :first-child {
+    margin-top: 0;
+  }
+
+  .lf-prose > :last-child {
+    margin-bottom: 0;
+  }
+
+  .lf-prose h1,
+  .lf-prose h2,
+  .lf-prose h3,
+  .lf-prose h4 {
+    color: var(--lf-text);
+    font-weight: 570;
+    letter-spacing: -0.035em;
+    line-height: 1.2;
+  }
+
+  .lf-prose h2 {
+    margin: 3.2rem 0 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--lf-border);
+    font-size: 1.65rem;
+  }
+
+  .lf-prose h3 {
+    margin: 2.4rem 0 0.75rem;
+    font-size: 1.25rem;
+  }
+
+  .lf-prose h2,
+  .lf-prose h3 {
+    scroll-margin-top: calc(var(--lf-nav-height) + 1.5rem);
+  }
+
+  .lf-prose p,
+  .lf-prose ul,
+  .lf-prose ol,
+  .lf-prose blockquote,
+  .lf-prose pre,
+  .lf-prose table,
+  .lf-prose details {
+    margin-block: 1.25rem;
+  }
+
+  .lf-prose p,
+  .lf-prose li {
+    color: var(--lf-text);
+  }
+
+  .lf-prose ul,
+  .lf-prose ol {
+    padding-left: 1.35rem;
+  }
+
+  .lf-prose li + li {
+    margin-top: 0.45rem;
+  }
+
+  .lf-prose a {
+    color: var(--lf-text);
+    text-decoration-color: var(--lf-accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .lf-prose a:hover {
+    color: var(--lf-accent);
+  }
+
+  .lf-prose blockquote {
+    padding: 0.3rem 0 0.3rem 1.15rem;
+    border-left: 2px solid var(--lf-accent);
+    color: var(--lf-muted);
+  }
+
+  .lf-prose blockquote p {
+    color: inherit;
+  }
+
+  .lf-prose code,
+  .lf-prose kbd {
+    padding: 0.15em 0.32em;
+    border: 1px solid var(--lf-border);
+    border-radius: 0.28rem;
+    background: var(--lf-code);
+    font-family: var(--lf-font-mono);
+    font-size: 0.86em;
+  }
+
+  .lf-prose pre {
+    overflow-x: auto;
+    padding: 1rem;
+    border: 1px solid var(--lf-border);
+    border-radius: var(--lf-radius);
+    background: var(--lf-code);
+    box-shadow: var(--lf-shadow);
+    line-height: 1.55;
+  }
+
+  .lf-prose pre code {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-size: 0.82rem;
+  }
+
+  .lf-prose table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+  }
+
+  .lf-prose th,
+  .lf-prose td {
+    padding: 0.65rem 0.8rem;
+    border: 1px solid var(--lf-border);
+    text-align: left;
+  }
+
+  .lf-prose th {
+    background: var(--lf-panel);
+    font-size: 0.84rem;
+    font-weight: 600;
+  }
+
+  .lf-prose details {
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--lf-border);
+    border-radius: var(--lf-radius);
+    background: var(--lf-panel);
+  }
+
+  .lf-prose summary {
+    cursor: pointer;
+    font-weight: 580;
+  }
+}

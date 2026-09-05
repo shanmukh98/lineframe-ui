@@ -1,0 +1,95 @@
+@layer lineframe.components {
+  .lf-button {
+    display: inline-flex;
+    min-block-size: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lf-space-2);
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--lf-border-strong);
+    border-radius: 0.55rem;
+    background: transparent;
+    color: var(--lf-text);
+    font-size: 0.86rem;
+    font-weight: 550;
+    line-height: 1.4;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      border-color 150ms ease,
+      background 150ms ease;
+  }
+
+  .lf-button:hover {
+    border-color: var(--lf-accent);
+    background: var(--lf-accent-soft);
+  }
+
+  .lf-button--solid {
+    border-color: var(--lf-action-bg);
+    background: var(--lf-action-bg);
+    color: var(--lf-on-action);
+  }
+
+  .lf-button--solid:hover {
+    border-color: var(--lf-accent);
+    background: var(--lf-accent);
+    color: var(--lf-on-action);
+  }
+
+  .lf-button--quiet {
+    border-color: transparent;
+  }
+
+  .lf-button--danger {
+    border-color: var(--lf-danger);
+    background: var(--lf-danger);
+    color: var(--lf-on-action);
+  }
+
+  .lf-button--danger:hover {
+    border-color: var(--lf-danger);
+    background: color-mix(in srgb, var(--lf-danger) 90%, var(--lf-text));
+  }
+
+  .lf-button--small {
+    min-block-size: 2.25rem;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .lf-button--large {
+    min-block-size: 3.25rem;
+    padding: 0.85rem 1.25rem;
+    font-size: 1rem;
+  }
+
+  .lf-button:disabled,
+  .lf-button[aria-disabled="true"] {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .lf-site .lf-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--lf-muted);
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .lf-back-link__icon {
+    color: var(--lf-accent);
+    transition: transform 140ms ease;
+  }
+
+  .lf-site .lf-back-link:hover {
+    color: var(--lf-text);
+  }
+
+  .lf-site .lf-back-link:hover .lf-back-link__icon {
+    transform: translateX(-0.2rem);
+  }
+}

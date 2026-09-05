@@ -1,0 +1,108 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import Demo from "../../../components/Demo.astro";
+import { cards, table, disclosure, prose, contentList } from "../../../examples/content";
+---
+
+<DocsLayout
+  title="Content"
+  description="Readable prose and useful containers for real information. Let the content decide whether it needs a card, a table, or just a paragraph."
+  section="Components"
+  accent="violet"
+  source="website/src/pages/docs/components/content.astro"
+>
+  <div class="lf-prose docs-prose">
+    <h2 id="cards">Cards for related destinations</h2>
+    <p>
+      <code>lf-card-grid</code> presents a responsive two-column collection.
+      <code>lf-card</code> supplies a quiet surface,
+      <code>lf-card__title</code> a heading, and
+      <code>lf-card__text</code> supporting text.
+    </p>
+    <p>
+      These cards are links to actual guides. When the whole card is an anchor, do not nest another
+      link, button, or form control inside it. For a noninteractive grouping, use an <code
+        >article</code
+      > or <code>div</code>
+      instead of pretending it is clickable.
+    </p>
+  </div>
+  <Demo id="content-cards" title="Two real destinations" code={cards} />
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="tables">Tables for relationships, not layout</h2>
+      <p>
+        Keep the native <code>table</code>, <code>caption</code>, and header cells. Use <code
+          >scope="col"</code
+        > for column headers and
+        <code>scope="row"</code> for row headers. A status inside a table should remain understandable
+        without its color.
+      </p>
+    </div>
+    <Demo id="content-table" title="A named, keyboard-scrollable table" code={table} />
+    <div class="lf-prose docs-prose">
+      <p>
+        The <code>lf-table-wrap</code> container scrolls when needed. Give a potentially scrollable region
+        an accessible name and
+        <code>tabindex="0"</code> so keyboard users can reach and scroll it. Avoid duplicating an overly
+        long caption in its accessible name.
+      </p>
+      <p>
+        Complex tables may need explicit header associations beyond
+        <code>scope</code>. Consider simplifying the information before adding more table mechanics.
+      </p>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="disclosures">A disclosure, without a controller</h2>
+      <p>
+        Put <code>lf-disclosure</code> on a native <code>details</code> element, with <code
+          >summary</code
+        > as its first child. The browser handles expansion, focus, and keyboard activation.
+      </p>
+    </div>
+    <Demo id="content-disclosure" title="Try opening it with the keyboard" code={disclosure} />
+    <div class="lf-prose docs-prose">
+      <p>
+        Use the native <code>open</code> attribute for an initially expanded disclosure. Do not add a
+        second button or manage a separate
+        <code>aria-expanded</code> state on the summary. Keep essential task instructions visible rather
+        than hiding them just to shorten a page.
+      </p>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="prose">Give Markdown a readable frame</h2>
+      <p>
+        Wrap rendered Markdown or hand-written long-form HTML in
+        <code>lf-prose</code>. It styles headings, paragraphs, lists, links, quotes, code, tables,
+        and disclosures while keeping a comfortable measure.
+      </p>
+    </div>
+    <Demo id="content-prose" title="Ordinary semantic HTML" code={prose} />
+    <div class="lf-prose docs-prose">
+      <p>
+        The CSS does not sanitize content. Your Markdown renderer or application is responsible for
+        handling untrusted HTML safely. This documentation renders only its own checked-in example
+        snippets.
+      </p>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="content-lists">A reusable resource index</h2>
+      <p>
+        The existing <code>lf-post-list</code> and <code>lf-post-link</code>
+        class names are preserved for compatibility. They work just as well for a guide index, resource
+        directory, or project list. They do not require personal-blog content.
+      </p>
+    </div>
+    <Demo id="content-list" title="A guide index using the stable list hooks" code={contentList} />
+  </section>
+</DocsLayout>

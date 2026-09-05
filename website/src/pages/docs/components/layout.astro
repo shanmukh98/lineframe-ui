@@ -1,0 +1,135 @@
+---
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import Demo from "../../../components/Demo.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import {
+  layoutStack,
+  layoutGrid,
+  layoutFrame,
+  typography,
+  heroMarkup,
+} from "../../../examples/layout";
+import { url } from "../../../lib/urls";
+---
+
+<DocsLayout
+  title="Layout & typography"
+  description="Build the shape of a page with a few predictable primitives. Keep reading widths comfortable and the hierarchy clear."
+  section="Components"
+  source="website/src/pages/docs/components/layout.astro"
+>
+  <div class="lf-prose docs-prose">
+    <h2 id="stack-and-cluster">Stack vertically. Cluster horizontally.</h2>
+    <p>
+      <code>lf-stack</code> arranges direct children vertically and removes their outer block margins
+      so the gap remains consistent. <code>lf-cluster</code>
+      arranges items in a wrapping row. Both consume <code>--lf-gap</code>.
+    </p>
+  </div>
+  <Demo id="layout-stack" title="Two composable layout primitives" code={layoutStack} />
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="responsive-grid">A grid that makes its own room</h2>
+      <p>
+        <code>lf-grid</code> adds as many columns as fit. Set
+        <code>--lf-grid-min</code> to the preferred minimum width of a column and
+        <code>--lf-gap</code> to control spacing. The minimum is clamped to the available width so a narrow
+        viewport can use one column.
+      </p>
+    </div>
+    <Demo id="layout-grid" title="Resize the page to see the columns adapt" code={layoutGrid} />
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="frame-and-container">Frame the page, not every paragraph</h2>
+      <p>
+        <code>lf-shell</code> supplies responsive side padding.
+        <code>lf-frame</code> centers a bounded layout with quiet vertical borders.
+        <code>lf-container</code> is a simpler centered container with side gutters. Use the combination
+        your page needs, rather than nesting wrappers by habit.
+      </p>
+    </div>
+    <Demo id="layout-frame" title="The framed page vocabulary" code={layoutFrame} />
+    <div class="lf-prose docs-prose">
+      <p>
+        The frame uses <code>--lf-frame-width</code>. Long-form
+        <code>lf-prose</code> uses <code>--lf-reading-width</code>. They are separate decisions: a
+        page can be wide without making every line of text wide.
+      </p>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="lf-prose docs-prose">
+      <h2 id="type-hierarchy">A hierarchy without shouting</h2>
+      <p>
+        Use <code>lf-kicker</code> for a short contextual label,
+        <code>lf-lead</code> for introductory text, and <code>lf-meta</code>
+        for supporting details. Typography classes change appearance, not the document outline. Choose
+        heading levels according to the page’s structure.
+      </p>
+    </div>
+    <Demo id="layout-type" title="Context, heading, lead, and metadata" code={typography} />
+    <div class="lf-prose docs-prose">
+      <h3 id="hero">An editorial introduction</h3>
+      <p>
+        <code>lf-hero</code> creates a label-and-content split that stacks on smaller screens. <code
+          >lf-display</code
+        > is the display-heading style; reserve it for a genuine page introduction.
+      </p>
+    </div>
+    <CodeBlock id="layout-hero" code={heroMarkup} label="Page introduction" />
+    <div class="lf-prose docs-prose">
+      <h3 id="sections">Labeled sections</h3>
+      <p>
+        <code>lf-section</code> uses a similar rail-and-body structure. Put a short
+        <code>lf-section__label</code> and optional
+        <code>lf-section__title</code> in <code>lf-section__rail</code>, and content in <code
+          >lf-section__body</code
+        >. The split collapses on smaller viewports.
+      </p>
+    </div>
+    <CodeBlock
+      id="layout-section"
+      label="A labeled section"
+      code={`<section class="lf-section" aria-labelledby="resources-heading">
+  <div class="lf-section__rail">
+    <p class="lf-section__label">Resources</p>
+    <h2 class="lf-section__title" id="resources-heading">Go a little deeper.</h2>
+  </div>
+  <div class="lf-section__body">
+    <p>Related guides, examples, or useful next steps.</p>
+  </div>
+</section>`}
+    />
+  </section>
+
+  <div class="lf-prose docs-prose">
+    <h2 id="utilities">Two small accessibility utilities</h2>
+    <p>
+      <code>lf-visually-hidden</code> keeps useful text available to assistive technology without displaying
+      it. Do not use it to hide focusable controls.
+      <code>lf-skip-link</code> reveals a route past repeated navigation when focused.
+    </p>
+  </div>
+  <CodeBlock
+    id="layout-skip-link"
+    label="Before your header"
+    code={`<a class="lf-skip-link" href="#main">Skip to content</a>
+<!-- Header and navigation -->
+<main id="main" tabindex="-1">
+  <!-- Your page -->
+</main>`}
+  />
+  <div class="lf-prose docs-prose">
+    <p>
+      Keep source order logical when rearranging a layout. Test at 320px, at increased zoom, and
+      with longer translated text. Prefer a 65–75 character reading measure as a design guideline,
+      not a fixed viewport assumption. See <a href={url("docs/components/content/")}
+        >content components</a
+      > for prose and cards.
+    </p>
+  </div>
+</DocsLayout>

@@ -1,0 +1,63 @@
+@layer lineframe.base {
+  :where(.lf-site, .lf-site *),
+  :where(.lf-site, .lf-site *)::before,
+  :where(.lf-site, .lf-site *)::after {
+    box-sizing: border-box;
+  }
+
+  html:has(body.lf-site) {
+    scroll-behavior: smooth;
+  }
+
+  body.lf-site {
+    margin: 0;
+  }
+
+  .lf-site {
+    min-inline-size: 0;
+    background: var(--lf-bg);
+    color: var(--lf-text);
+    font-family: var(--lf-font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :where(.lf-site) a {
+    color: inherit;
+  }
+
+  :where(.lf-site) :where(img, svg) {
+    display: block;
+    max-inline-size: 100%;
+  }
+
+  :where(.lf-site) :where(button, input, textarea, select) {
+    font: inherit;
+  }
+
+  :where(.lf-site) ::selection {
+    background: var(--lf-accent-medium);
+    color: var(--lf-text);
+  }
+
+  :where(.lf-site) :focus-visible {
+    outline: 2px solid var(--lf-accent);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html:has(body.lf-site) {
+      scroll-behavior: auto;
+    }
+
+    :where(.lf-site, .lf-site *),
+    :where(.lf-site, .lf-site *)::before,
+    :where(.lf-site, .lf-site *)::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+}

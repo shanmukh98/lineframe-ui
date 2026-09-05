@@ -1,0 +1,16 @@
+node_modules/
+dist/
+website/dist/
+website/.astro/
+website/public/assets/
+playwright-report/
+test-results/
+package-lock.json
+lineframe.css
+lineframe-accents.css
+lineframe.js
+lineframe-theme.js
+lineframe-toc.js
+lineframe-icons.svg
+*.map
+*.tgz

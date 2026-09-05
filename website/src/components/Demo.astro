@@ -1,0 +1,20 @@
+---
+import CodeBlock from "./CodeBlock.astro";
+
+interface Props {
+  id: string;
+  code: string;
+  title: string;
+  class?: string;
+}
+
+const { id, code, title, class: className } = Astro.props;
+---
+
+<div class:list={["docs-example", className]} id={id}>
+  <div class="demo-label"><span>Preview</span><span>{title}</span></div>
+  <div class="demo-preview">
+    <Fragment set:html={code} />
+  </div>
+  <CodeBlock id={`${id}-code`} code={code} label="HTML" />
+</div>

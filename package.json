@@ -1,21 +1,70 @@
 {
   "name": "@shanmukh98/lineframe-ui",
-  "version": "0.6.0",
-  "description": "A restrained editorial CSS system with framed layouts and subtle page accents.",
-  "homepage": "https://github.com/shanmukh98/lineframe-ui",
+  "version": "0.7.0",
+  "description": "An accessible, framework-agnostic UI library for content-first websites.",
+  "homepage": "https://shanmukh98.github.io/lineframe-ui/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shanmukh98/lineframe-ui.git"
   },
-  "style": "lineframe.css",
+  "type": "module",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "style": "./lineframe.css",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./styles.css": "./lineframe.css",
+    "./accents.css": "./lineframe-accents.css",
+    "./styles/*": "./dist/styles/*",
+    "./icons.svg": "./lineframe-icons.svg",
+    "./icons/*": "./dist/icons/*",
+    "./auto": "./lineframe.js",
+    "./lineframe.css": "./lineframe.css",
+    "./lineframe-accents.css": "./lineframe-accents.css",
+    "./lineframe-theme.js": "./lineframe-theme.js",
+    "./lineframe-toc.js": "./lineframe-toc.js",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "**/*.css",
+    "./src/entries/*.ts",
+    "./lineframe.js",
+    "./lineframe-theme.js",
+    "./lineframe-toc.js"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
-    "test": "node --test"
+    "build": "node scripts/build.mjs && tsc -p tsconfig.build.json",
+    "dev": "npm run build && concurrently -k \"node scripts/build.mjs --watch\" \"tsc -p tsconfig.build.json --watch --preserveWatchOutput\" \"cross-env ASTRO_TELEMETRY_DISABLED=1 astro dev --root website\"",
+    "build:site": "npm run build && cross-env ASTRO_TELEMETRY_DISABLED=1 astro build --root website",
+    "preview": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro preview --root website --host 127.0.0.1",
+    "format": "prettier --write .",
+    "check:format": "prettier --check .",
+    "check": "npm run check:format && tsc --noEmit && cross-env ASTRO_TELEMETRY_DISABLED=1 astro check --root website",
+    "test": "npm run build && npm run test:unit",
+    "test:unit": "node --test test/*.test.cjs",
+    "test:browser": "playwright test",
+    "check:package": "node scripts/check-package.mjs",
+    "verify": "npm run check && npm run build:site && npm run test:unit && npm run test:browser && npm run check:package",
+    "prepack": "npm run build"
   },
   "files": [
+    "dist",
     "lineframe.css",
     "lineframe-accents.css",
+    "lineframe.js",
+    "lineframe.js.map",
     "lineframe-theme.js",
+    "lineframe-theme.js.map",
     "lineframe-toc.js",
+    "lineframe-toc.js.map",
+    "lineframe-icons.svg",
     "favicon.svg",
     "README.md",
     "LICENSE"
@@ -27,5 +76,19 @@
     "editorial",
     "theme"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@axe-core/playwright": "4.13.0",
+    "@fontsource-variable/geist": "5.3.0",
+    "@fontsource-variable/geist-mono": "5.3.0",
+    "@playwright/test": "1.63.0",
+    "astro": "7.3.1",
+    "concurrently": "10.0.5",
+    "cross-env": "10.1.0",
+    "esbuild": "0.28.2",
+    "prettier": "3.9.6",
+    "prettier-plugin-astro": "0.14.1",
+    "typescript": "6.0.3"
+  }
 }
