@@ -93,6 +93,10 @@
         if (heading.getBoundingClientRect().top <= threshold) current = heading;
       });
 
+      // A short final section may never reach the header threshold.
+      const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 1;
+      if (window.scrollY > 0 && atBottom) current = headings[headings.length - 1];
+
       setActive(current.id);
       ticking = false;
     };

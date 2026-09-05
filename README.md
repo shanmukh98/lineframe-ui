@@ -10,19 +10,24 @@ as visible grids, generous spacing, quiet metadata, and strong type hierarchy.
 ## Use
 
 ```html
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script
-  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.5.0/lineframe-theme.js"
+  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.6.0/lineframe-theme.js"
 ></script>
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.5.0/lineframe.css"
+  href="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.6.0/lineframe.css"
 >
 <script
-  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.5.0/lineframe-toc.js"
+  src="https://cdn.jsdelivr.net/gh/shanmukh98/lineframe-ui@v0.6.0/lineframe-toc.js"
   defer
 ></script>
-<body class="lf-site" style="--lf-accent: #526f7d">
+<body class="lf-site" data-lineframe-accent="slate">
 ```
+
+Do not cap the viewport's scale or disable user zoom. When self-hosting, keep
+`lineframe.css` and `lineframe-accents.css` together; the main stylesheet imports
+the palette module.
 
 The theme script uses the browser's `prefers-color-scheme` value by default.
 Add a manual toggle anywhere in the page:
@@ -39,30 +44,49 @@ Manual choices are stored under `lineframe-theme`. Call
 
 ## Per-page accents
 
-Set `--lf-accent` on a page wrapper or `body`:
+All named palettes live in **`lineframe-accents.css`**. Each defines
+`--lf-accent-light` and `--lf-accent-dark`; the theme selects the right value.
+The included presets are `slate` (default), `violet`, `moss`, and `clay`.
 
 ```html
-<body class="lf-site" style="--lf-accent: #7a6650">
+<body class="lf-site" data-lineframe-accent="violet">
 ```
 
-Accent color is intentionally limited to small markers, link decoration,
-focus rings, selection, and hover borders. It does not recolor entire panels.
+To change a palette, edit its two colors in that module. To add one, add a
+selector with the same paired tokens:
 
-In Jekyll, expose it through front matter:
+```css
+[data-lineframe-accent="ocean"] {
+  --lf-accent-light: #4f6b7a;
+  --lf-accent-dark: #86a1ad;
+}
+```
+
+Use `data-lineframe-accent="ocean"` on the body or a scoped component. The
+library recomputes text, fills, borders, selection, and focus colors at that
+scope, so tints do not accidentally inherit another page's palette. Keep
+accent text at least 4.5:1 against the backgrounds used in each theme.
+
+Existing direct `--lf-accent` overrides still work, but they use one color in
+both modes. Prefer named, paired palettes for new pages.
+
+In Jekyll, pages select a palette by name rather than repeating hex values:
 
 ```yaml
 ---
-accent: "#6c728f"
+accent: violet
 ---
 ```
 
 ```html
 <body
   class="lf-site"
-  data-theme="{{ site.theme_mode | default: 'light' }}"
-  style="--lf-accent: {{ page.accent | default: site.accent }}"
+  data-lineframe-accent="{{ page.accent | default: site.accent | default: 'slate' | escape }}"
 >
 ```
+
+Set `accent: slate` in `_config.yml` for the site default. Keep theme selection
+on the root element under the theme controller, not in each page's front matter.
 
 ## Components
 
@@ -108,3 +132,8 @@ the reader scrolls.
 
 On wide screens the TOC stays on the left as the page scrolls. At narrower
 widths it becomes a collapsible block above the article.
+
+## Development
+
+Run `npm test` with Node.js 18 or newer for the dependency-free regression
+tests. Preview `demo/index.html` in both themes when changing shared styles.

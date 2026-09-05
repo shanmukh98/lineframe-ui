@@ -25,12 +25,17 @@
         height: 1.8rem;
         border: 1px solid var(--lf-border-strong);
         border-radius: 50%;
-        background: var(--swatch);
+        background: var(--lf-accent);
         cursor: pointer;
+      }
+
+      .demo-swatch[aria-pressed="true"] {
+        outline: 2px solid var(--lf-text);
+        outline-offset: 3px;
       }
     </style>
   </head>
-  <body class="lf-site">
+  <body class="lf-site" data-lineframe-accent="slate">
     <header class="lf-header">
       <div class="lf-header__inner">
         <a class="lf-brand" href="#">
@@ -60,8 +65,8 @@
             <h1 class="lf-display">A calm frame for technical writing.</h1>
             <p class="lf-lead">
               Lineframe uses strong typography, visible structure, and only a
-              trace of accent color. Change one custom property to give each
-              page its own tone.
+              trace of accent color. Choose a named palette to give each page
+              its own tone, with separate light and dark colors.
             </p>
             <div class="lf-actions">
               <a class="lf-button lf-button--solid" href="#writing">Read notes</a>
@@ -71,11 +76,11 @@
 
         <div class="lf-strip">
           <span>Choose a page accent</span>
-          <div class="demo-controls" aria-label="Accent color">
-            <button class="demo-swatch" style="--swatch: #526f7d" data-accent="#526f7d" aria-label="Slate"></button>
-            <button class="demo-swatch" style="--swatch: #796956" data-accent="#796956" aria-label="Umber"></button>
-            <button class="demo-swatch" style="--swatch: #6c728f" data-accent="#6c728f" aria-label="Violet"></button>
-            <button class="demo-swatch" style="--swatch: #5f7866" data-accent="#5f7866" aria-label="Green"></button>
+          <div class="demo-controls" role="group" aria-label="Accent color">
+            <button class="demo-swatch" type="button" data-lineframe-accent="slate" aria-label="Slate" aria-pressed="true"></button>
+            <button class="demo-swatch" type="button" data-lineframe-accent="violet" aria-label="Violet" aria-pressed="false"></button>
+            <button class="demo-swatch" type="button" data-lineframe-accent="moss" aria-label="Moss" aria-pressed="false"></button>
+            <button class="demo-swatch" type="button" data-lineframe-accent="clay" aria-label="Clay" aria-pressed="false"></button>
           </div>
         </div>
 
@@ -124,6 +129,7 @@
               <article class="lf-card">
                 <h3 class="lf-card__title">Accent stays quiet</h3>
                 <p class="lf-card__text">Color appears in focus, links, markers, and borders rather than taking over the page.</p>
+                <span class="lf-tag">Paired accents</span>
               </article>
             </div>
           </div>
@@ -139,9 +145,13 @@
     </footer>
 
     <script>
-      document.querySelectorAll("[data-accent]").forEach((button) => {
+      const swatches = document.querySelectorAll("button[data-lineframe-accent]");
+      swatches.forEach((button) => {
         button.addEventListener("click", () => {
-          document.body.style.setProperty("--lf-accent", button.dataset.accent);
+          document.body.dataset.lineframeAccent = button.dataset.lineframeAccent;
+          swatches.forEach((swatch) => {
+            swatch.setAttribute("aria-pressed", String(swatch === button));
+          });
         });
       });
     </script>
