@@ -87,6 +87,11 @@
   color: var(--lf-muted);
 }
 
+.site-footer-credit a {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
 .site-footer-links {
   display: flex;
   flex-wrap: wrap;

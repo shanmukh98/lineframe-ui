@@ -5,7 +5,12 @@ import { sourceUrl, url } from "../lib/urls";
 
 <footer class="lf-footer site-footer">
   <div class="lf-footer__inner site-footer-inner">
-    <p>Lineframe UI <span>v{site.version} · MIT licensed</span></p>
+    <p>
+      Lineframe UI <span>v{site.version} · MIT licensed</span>
+      <span class="site-footer-credit">
+        Design inspired by <a href="https://cobanov.dev/">cobanov.dev</a>.
+      </span>
+    </p>
     <nav class="site-footer-links" aria-label="Footer">
       <a href={url("docs/philosophy/")}>Philosophy & credits</a>
       <a href={url("docs/contributing/")}>Contribute</a>

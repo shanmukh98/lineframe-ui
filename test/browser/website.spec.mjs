@@ -65,6 +65,11 @@ test("documentation pages, local links, and metadata are complete", async ({
     await settle(page);
     await expect(page.getByRole("main")).toHaveCount(1);
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+    await expect(page.locator(".site-footer-credit")).toHaveText("Design inspired by cobanov.dev.");
+    await expect(page.locator(".site-footer-credit a")).toHaveAttribute(
+      "href",
+      "https://cobanov.dev/",
+    );
     const description = await page.locator('meta[name="description"]').getAttribute("content");
     expect(description?.length, route).toBeGreaterThan(20);
     expect(
