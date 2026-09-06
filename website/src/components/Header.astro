@@ -1,6 +1,7 @@
 ---
 import ThemeControl from "./ThemeControl.astro";
 import Icon from "./Icon.astro";
+import LineframeMark from "../../../favicon.svg";
 import { site } from "../lib/site";
 import { url } from "../lib/urls";
 
@@ -10,7 +11,13 @@ const isDocs = Astro.url.pathname.startsWith(url("docs/"));
 <header class="lf-header site-header">
   <div class="lf-header__inner site-header-inner">
     <a class="lf-brand" href={url()} aria-label="Lineframe UI home">
-      <span class="lf-brand__mark" aria-hidden="true"></span>
+      <LineframeMark
+        class="lineframe-mark site-brand-mark"
+        width="24"
+        height="24"
+        aria-hidden="true"
+        focusable="false"
+      />
       <span>Lineframe UI</span>
     </a>
     <div class="lf-header__actions site-header-actions">

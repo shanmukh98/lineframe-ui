@@ -1,5 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="8" fill="#faf9f5"/>
-  <path d="M10 8v14h13" fill="none" stroke="#526f7d" stroke-width="3"/>
-  <rect x="1" y="1" width="30" height="30" rx="7" fill="none" stroke="#bfc1b8"/>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  class="lineframe-mark"
+  width="32"
+  height="32"
+  viewBox="0 0 32 32"
+>
+  <title>Lineframe UI</title>
+  <style>
+    .lineframe-mark {
+      color: var(--lf-text, #191b18);
+    }
+    @media (prefers-color-scheme: dark) {
+      .lineframe-mark {
+        color: var(--lf-text, #f4f3ee);
+      }
+    }
+  </style>
+  <path d="M4 4h12v4H8v16h16v-8h4v12H4Z" fill="currentColor" />
+  <path d="M20 4h8v8h-8Z" fill="var(--lf-accent, currentColor)" />
 </svg>

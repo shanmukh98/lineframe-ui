@@ -9,6 +9,48 @@ const pages = readdirSync(output, { recursive: true })
   .filter((file) => file.endsWith("index.html"))
   .map((file) => file.replaceAll("\\", "/").replace(/index\.html$/, ""));
 
+test("the favicon is fingerprinted and shares the header artwork", async ({
+  page,
+  request,
+  baseURL,
+}) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.goto(baseURL);
+  const href = await page.locator('link[rel="icon"]').getAttribute("href");
+  const iconUrl = new URL(href, baseURL);
+  expect(iconUrl.origin).toBe(new URL(baseURL).origin);
+  expect(iconUrl.pathname).toMatch(/\/favicon\.[^/]+\.svg$/);
+  const response = await request.get(iconUrl.href);
+  expect(response.ok()).toBe(true);
+  expect(response.headers()["content-type"]).toContain("image/svg+xml");
+  const paths = await page.evaluate(
+    (source) => {
+      const svg = new DOMParser().parseFromString(source, "image/svg+xml");
+      return [...svg.querySelectorAll("path")].map((path) => path.getAttribute("d"));
+    },
+    await response.text(),
+  );
+  expect(paths).toHaveLength(2);
+  expect(
+    await page
+      .locator(".site-header .site-brand-mark path")
+      .evaluateAll((paths) => paths.map((path) => path.getAttribute("d"))),
+  ).toEqual(paths);
+  await expect(page.locator(".site-brand-mark")).toHaveAttribute("aria-hidden", "true");
+  await settle(page);
+  const lightColor = await page
+    .locator(".site-brand-mark")
+    .evaluate((svg) => getComputedStyle(svg).color);
+  await page.locator("[data-lineframe-theme-toggle]").first().click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await settle(page);
+  const colors = await page
+    .locator(".site-brand-mark")
+    .evaluate((svg) => [getComputedStyle(svg).color, getComputedStyle(svg.closest("a")).color]);
+  expect(colors[0]).toBe(colors[1]);
+  expect(colors[0]).not.toBe(lightColor);
+});
+
 test("documentation pages, local links, and metadata are complete", async ({
   page,
   request,

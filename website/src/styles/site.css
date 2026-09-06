@@ -20,6 +20,13 @@
   gap: 1rem;
 }
 
+.site-brand-mark {
+  display: block;
+  flex: none;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+}
+
 .site-header-actions {
   gap: 1rem;
 }

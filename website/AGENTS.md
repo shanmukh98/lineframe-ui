@@ -32,6 +32,9 @@ site. Follow the root `AGENTS.md` as well as these scoped rules.
   working. Do not hard-code site-root-relative paths.
 - Preserve whitespace around inline prose. HTML compression is disabled; keep
   the rendered word-spacing regression when changing that setting.
+- The favicon and website header share `../favicon.svg`. Import its URL for
+  fingerprinted caching and its SVG component for inline, theme-aware branding;
+  do not duplicate the geometry or change the generic library brand placeholder.
 - Load the theme controller before styles. Theme state belongs on the document
   root; pages only select a named `data-lineframe-accent`.
 - Treat `public/assets/` and `dist/` as generated. The root build copies shared
